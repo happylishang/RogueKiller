@@ -10,7 +10,7 @@ import android.view.View;
  */
 abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Fragment {
 
-    T mPresenter;
+   protected T mPresenter;
 
     private boolean mIsViewInflated;
 

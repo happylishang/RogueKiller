@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RogueKiller</string>
+    <string name="process_list">进程列表</string>
 </resources>

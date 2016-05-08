@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import butterknife.ButterKnife;
+
 
 abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppCompatActivity {
 
@@ -13,6 +15,7 @@ abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
+        ButterKnife.bind(this);
         if (mPresenter != null) {
             mPresenter.onCreate();
         }

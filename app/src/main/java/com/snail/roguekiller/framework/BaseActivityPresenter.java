@@ -2,7 +2,8 @@ package com.snail.roguekiller.framework;
 
 import com.snail.roguekiller.eventbus.BaseEvent;
 
-import org.greenrobot.eventbus.EventBus;
+import de.greenrobot.event.EventBus;
+
 
 /**
  * Created by personal on 16/5/7.

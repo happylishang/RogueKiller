@@ -2,7 +2,7 @@ package com.snail.roguekiller.framework;
 
 import com.snail.roguekiller.eventbus.BaseEvent;
 
-import org.greenrobot.eventbus.EventBus;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by personal on 16/5/7.
@@ -39,7 +39,7 @@ public class BaseFragmentPresenter<T extends BaseFragment> extends BasePresenter
 
     }
 
-    public void onEventMainThread(BaseEvent event) {
+    public final void  onEventMainThread(BaseEvent event) {
 
         if (mTarget != null && mTarget.isViewInflated()) {
             onSKEventMainThread(event);
