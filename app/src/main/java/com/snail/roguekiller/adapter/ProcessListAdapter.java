@@ -14,8 +14,14 @@ import java.util.List;
 /**
  * Created by personal on 16/5/8.
  */
-public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListViewHolder> {
+public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListViewHolder>{
 
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    private OnItemClickListener mOnItemClickListener;
     private List<ProcessInfo> mProcessInfos;
 
     public ProcessListAdapter(List<ProcessInfo> infoList) {
@@ -32,11 +38,17 @@ public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListViewHold
     @Override
     public void onBindViewHolder(ProcessListViewHolder holder, int position) {
         holder.renderViews(mProcessInfos.get(position));
+        holder.setClickListener(mOnItemClickListener);
     }
 
     @Override
     public int getItemCount() {
         return mProcessInfos == null ? 20 : mProcessInfos.size();
     }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+    }
+
 
 }

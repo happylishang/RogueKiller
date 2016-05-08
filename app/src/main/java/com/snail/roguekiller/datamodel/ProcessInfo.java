@@ -3,6 +3,9 @@ package com.snail.roguekiller.datamodel;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.pm.ApplicationInfo;
+import android.graphics.drawable.Drawable;
+
+import com.snail.roguekiller.utils.AppProfile;
 
 /**
  * Created by personal on 16/5/8.
@@ -22,6 +25,9 @@ public class ProcessInfo {
         pid = info.pid;
         pkgList = info.pkgList;
         uid = info.uid;
+        packageName = applicationInfo.packageName;
+        appliationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
+        appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
     }
 
     public static ProcessInfo generateInstance(ActivityManager.RunningAppProcessInfo appProcessInfo
@@ -38,5 +44,8 @@ public class ProcessInfo {
     public int pid;
     public String[] pkgList = null;
     public String processName;
+    public String packageName;
+    public String appliationName;
+    public Drawable appIcon = null;
     public int uid;
 }
