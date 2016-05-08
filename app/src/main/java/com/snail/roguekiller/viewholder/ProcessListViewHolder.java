@@ -2,6 +2,7 @@ package com.snail.roguekiller.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.snail.roguekiller.R;
@@ -14,7 +15,7 @@ import com.snail.roguekiller.datamodel.ProcessInfo;
 public class ProcessListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private TextView mProcessName;
-
+    private ImageView mIconImg;
     public void setClickListener(ProcessListAdapter.OnItemClickListener clickListener) {
         mClickListener = clickListener;
     }
@@ -27,13 +28,14 @@ public class ProcessListViewHolder extends RecyclerView.ViewHolder implements Vi
     }
 
     public void bindViews(View rootView) {
-        mProcessName = (TextView) rootView.findViewById(R.id.bt_info);
-        mProcessName.setOnClickListener(this);
+        mProcessName = (TextView) rootView.findViewById(R.id.tv_process_name);
+        mIconImg = (ImageView) rootView.findViewById(R.id.icon_img);
+        rootView.setOnClickListener(this);
     }
 
     public void renderViews(ProcessInfo info) {
         mProcessName.setText(info.appliationName);
-
+        mIconImg.setImageDrawable(info.appIcon);
     }
 
     @Override

@@ -90,6 +90,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
         switch (item.getItemId())//得到被点击的item的itemId
         {
             case R.id.menu_setting:
+                AboutActivity.startActivity(this);
+                overridePendingTransition(R.anim.fade_in_300,R.anim.keep_still);
                 break;
         }
         return true;

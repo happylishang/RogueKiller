@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+    <color name="black">#000000</color> <!-- 黑色 -->
+    <color name="red">#ff0000</color> <!-- 红色 -->
+    <color name="white">#ffffff</color> <!-- 白色 -->
+    <color name="blue">#0379b8</color> <!-- 蓝色 -->
+    <color name="purple">#9932CD</color> <!-- 紫色 -->
+    <color name="grey">#808080</color> <!-- 灰色 -->
 </resources>

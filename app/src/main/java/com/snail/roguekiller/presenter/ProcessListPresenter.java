@@ -63,7 +63,7 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
 
         mCurrentOperation = position;
         switch (view.getId()) {
-            case R.id.bt_info:
+            case R.id.lv_container:
                 mTarget.showConfirmDialog(position);
                 break;
         }

@@ -1,14 +1,19 @@
 package com.snail.roguekiller.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 
 import com.snail.roguekiller.framework.BaseActivity;
 import com.snail.roguekiller.framework.BaseActivityPresenter;
 
-public class SplashActivity extends BaseActivity {
+public class AboutActivity extends BaseActivity {
+
+    public static void startActivity(Context context) {
+        Intent intent =new Intent(context,AboutActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected BaseActivityPresenter createPresenter() {
@@ -18,12 +23,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                HomeActivity.startActivity(SplashActivity.this);
-                finish();
-            }
-        }, 300);
+
     }
 }
