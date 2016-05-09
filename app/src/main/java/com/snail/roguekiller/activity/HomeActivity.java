@@ -73,11 +73,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
     }
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -95,5 +90,12 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
                 break;
         }
         return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+//        ToastUtils.show("pressed");
     }
 }

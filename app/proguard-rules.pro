@@ -22,15 +22,27 @@
   public *;
 }
 
+-keep public class * extends android.support.v4.**
+-keep public class * extends android.app.Application
 
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
 
 -keepclasseswithmembernames class * {
     @butterknife.* <fields>;
 }
 
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
+#EventBus
+-keep class de.greenrobot.**{*;}
+-keepclassmembers class ** {
+    public void onEvent*(**);
+    void onEvent*(**);
+}
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
 }

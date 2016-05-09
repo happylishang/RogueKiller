@@ -29,9 +29,19 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        releaseConfig {
+            storeFile file('../keystore.jks')
+            Properties properties = loadProperties('release.properties')
+            storePassword properties.get('storepassword')
+            keyAlias properties.get('keyalias')
+            keyPassword properties.get('keypassword')
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -53,4 +63,24 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
+}
+
+Properties loadProperties(String name) {
+    Properties properties = new Properties()
+
+    InputStream is = null;
+    try {
+        is = new FileInputStream(name)
+        properties.load(is)
+    } catch (Throwable tr) {
+    } finally {
+        if (is != null) {
+            try {
+                is.close()
+            } catch (Throwable tr) {
+            }
+        }
+    }
+
+    return properties
 }

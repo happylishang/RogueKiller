@@ -40,19 +40,9 @@ public class ResourcesUtil {
 
     public static Drawable getDrawable(@DrawableRes int drawableID) {
 
-//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP_MR1){
-//            return SDK22.getDrawable(drawableID);
-//        }else{
         return AppProfile.getContext().getResources().getDrawable(drawableID);
-//        }
     }
 
-//    @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
-//    static class SDK22 {
-//        public static Drawable getDrawable(int drawableID) {
-//            return AppProfile.getContext().getResources().getDrawable(drawableID, null);
-//        }
-//    }
 
     public static String getUrl(int resourceId) {
         Resources r = AppProfile.getContext().getResources();

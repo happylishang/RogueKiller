@@ -1,5 +1,6 @@
 package com.snail.roguekiller.framework;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,10 @@ import android.view.View;
  */
 abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Fragment {
 
-   protected T mPresenter;
+    protected T mPresenter;
 
     private boolean mIsViewInflated;
+    private ProgressDialog mWaitingDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,5 +69,16 @@ abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Frag
 
     public boolean isViewInflated() {
         return mIsViewInflated;
+    }
+
+    public void showWaiting() {
+        if (getActivity() instanceof BaseActivity) {
+            ((BaseActivity) getActivity()).showWaiting();
+        }
+    }
+    public void stopWaiting() {
+        if (getActivity() instanceof BaseActivity) {
+            ((BaseActivity) getActivity()).stopWaiting();
+        }
     }
 }

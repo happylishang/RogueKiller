@@ -55,4 +55,15 @@ public class SystemUtils {
         am.killBackgroundProcesses(packageName);
     }
 
+    public static String getVersion() {
+        PackageManager manager = AppProfile.getContext().getPackageManager();
+        PackageInfo info = null;
+        try {
+            info = manager.getPackageInfo(AppProfile.getContext().getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return info.versionName;
+
+    }
 }

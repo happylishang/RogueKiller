@@ -37,7 +37,7 @@ public class BaseActivityPresenter<T extends BaseActivity> extends BasePresenter
         EventBus.getDefault().unregister(this);
     }
 
-    public void onEventMainThread(BaseEvent event) {
+    public final void onEventMainThread(BaseEvent event) {
 
         onSKEventMainThread(event);
     }

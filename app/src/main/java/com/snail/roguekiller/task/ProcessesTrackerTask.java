@@ -34,12 +34,31 @@ public class ProcessesTrackerTask extends AsyncTask {
             if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
                 processInfos.add(ProcessInfo.generateInstance(item, applicationInfo));
             }
+
         }
+        processInfos = sortByFirstCase(processInfos);
         ProcessTrackEvent event = new ProcessTrackEvent();
         ProcessListInfo processListInfo = new ProcessListInfo();
         processListInfo.mProcessInfos = processInfos;
         event.mData = processListInfo;
         EventBus.getDefault().post(event);
         return null;
+    }
+
+    public static ArrayList<ProcessInfo> sortByFirstCase(ArrayList<ProcessInfo> processInfos) {
+
+        ArrayList<ProcessInfo> _tempInfos = new ArrayList<>();
+        int cycle = processInfos.size();
+        for (int i = 0; i < cycle; i++) {
+            ProcessInfo _info = processInfos.get(processInfos.size() - 1);
+            for (int j = processInfos.size() - 1; j > 0; j--) {
+                if (_info.appliationName.compareTo(processInfos.get(j - 1).appliationName) > 0) {
+                    _info = processInfos.get(j - 1);
+                }
+            }
+            processInfos.remove(_info);
+            _tempInfos.add(i, _info);
+        }
+        return _tempInfos;
     }
 }
