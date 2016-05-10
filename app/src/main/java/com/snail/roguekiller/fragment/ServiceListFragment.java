@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.framework.BaseActivity;
 import com.snail.roguekiller.framework.BaseFragment;
-import com.snail.roguekiller.presenter.ProcessListPresenter;
+import com.snail.roguekiller.presenter.ServiceListPresenter;
 import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
@@ -22,17 +22,16 @@ import butterknife.OnClick;
 /**
  * Created by personal on 16/5/7.
  */
-public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
+public class ServiceListFragment extends BaseFragment<ServiceListPresenter> {
 
 
     private View rootView;
     private RecyclerView mProcessList;
-
     private SwipeRefreshLayout swpProcessList;
 
     @Override
-    protected ProcessListPresenter createPresenter() {
-        return new ProcessListPresenter(this);
+    protected ServiceListPresenter createPresenter() {
+        return new ServiceListPresenter(this);
     }
 
     @Nullable
@@ -40,6 +39,7 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_process_list, container, false);
         initView();
+        initActionBar();
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -47,7 +47,11 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initActionBar();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void initView() {
@@ -62,8 +66,6 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
     public void initSwipViews(){
         swpProcessList = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
         swpProcessList.setOnRefreshListener(mPresenter);
-        //加载颜色是循环播放的，只要没有完成刷新就会一直循环，color1>color2>color3>color4
-        // 设置下拉圆圈上的颜色，蓝色、绿色、橙色、红色
         swpProcessList.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_blue_bright);
         swpProcessList.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
@@ -99,7 +101,7 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
         if (getActivity() instanceof BaseActivity) {
             BaseActivity _activity = (BaseActivity) getActivity();
             _activity.getLftTv().setVisibility(View.GONE);
-            _activity.getMiddleTv().setText("运行的进程");
+            _activity.getMiddleTv().setText("运行的服务");
             _activity.getRightTv().setText("选项");
             _activity.getRightTv().setOnClickListener(mPresenter);
         }

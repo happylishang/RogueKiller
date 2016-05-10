@@ -1,11 +1,11 @@
 package com.snail.roguekiller.adapter;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.fragment.ProcessListFragment;
+import com.snail.roguekiller.fragment.ServiceListFragment;
 import com.snail.roguekiller.framework.BaseFragment;
 import com.snail.roguekiller.utils.ResourcesUtil;
 
@@ -20,7 +20,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
     static private Class[] mFragments = {
             ProcessListFragment.class,
-            ProcessListFragment.class
+            ServiceListFragment.class
     };
 
     public String[] sTabTexts = new String[]{
@@ -36,7 +36,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public BaseFragment getItem(int position) {
         BaseFragment fragment = null;
         if (mFragmentHashMap.get(position) == null) {
             Class frgClass = mFragments[position];
@@ -49,6 +49,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        } else {
+            fragment = mFragmentHashMap.get(position);
         }
 
         return fragment;

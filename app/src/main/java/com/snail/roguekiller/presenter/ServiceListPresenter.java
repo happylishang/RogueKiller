@@ -5,14 +5,14 @@ import android.view.View;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.adapter.ProcessListAdapter;
-import com.snail.roguekiller.datamodel.ProcessListInfo;
 import com.snail.roguekiller.datamodel.RuningTaskInfo;
+import com.snail.roguekiller.datamodel.ProcessListInfo;
 import com.snail.roguekiller.eventbus.BaseEvent;
 import com.snail.roguekiller.eventbus.EventConstants;
-import com.snail.roguekiller.eventbus.ProcessTrackEvent;
-import com.snail.roguekiller.fragment.ProcessListFragment;
+import com.snail.roguekiller.eventbus.ServicesTrackEvent;
+import com.snail.roguekiller.fragment.ServiceListFragment;
 import com.snail.roguekiller.framework.BaseFragmentPresenter;
-import com.snail.roguekiller.task.ProcessesTrackerTask;
+import com.snail.roguekiller.task.ServicesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
 import com.snail.roguekiller.utils.SystemUtils;
 
@@ -21,17 +21,16 @@ import java.util.ArrayList;
 /**
  * Created by personal on 16/5/7.
  */
-public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragment> implements
+public class ServiceListPresenter extends BaseFragmentPresenter<ServiceListFragment> implements
         ProcessListAdapter.OnItemClickListener,
-        View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
+        View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private ProcessListAdapter mAdapter;
     private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
 
-    public ProcessListPresenter(ProcessListFragment target) {
+    public ServiceListPresenter(ServiceListFragment target) {
         super(target);
     }
 
@@ -44,16 +43,16 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
 
 
     private void startSearchTask() {
-        new ProcessesTrackerTask().execute();
+        new ServicesTrackerTask().execute();
         mTarget.showWaiting();
     }
 
     @Override
     public void onSKEventMainThread(BaseEvent event) {
         super.onSKEventMainThread(event);
-        if (event.mEventType == EventConstants.GET_TASK) {
+        if (event.mEventType == EventConstants.GET_SERVICE) {
             mTarget.stopWaiting();
-            ProcessTrackEvent processTrackEvent = (ProcessTrackEvent) event;
+            ServicesTrackEvent processTrackEvent = (ServicesTrackEvent) event;
             ProcessListInfo infos = (ProcessListInfo) processTrackEvent.mData;
             mProcessInfos.clear();
             mProcessInfos.addAll(infos.mProcessInfos);

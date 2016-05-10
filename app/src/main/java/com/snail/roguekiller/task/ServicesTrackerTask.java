@@ -10,10 +10,9 @@ import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 
-import com.jaredrummler.android.processes.AndroidProcesses;
-import com.snail.roguekiller.datamodel.ProcessListInfo;
 import com.snail.roguekiller.datamodel.RuningTaskInfo;
-import com.snail.roguekiller.eventbus.ProcessTrackEvent;
+import com.snail.roguekiller.datamodel.ProcessListInfo;
+import com.snail.roguekiller.eventbus.ServicesTrackEvent;
 import com.snail.roguekiller.utils.AppProfile;
 import com.snail.roguekiller.utils.SystemUtils;
 
@@ -22,7 +21,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class ProcessesTrackerTask extends AsyncTask {
+public class ServicesTrackerTask extends AsyncTask {
 
 
     @Override
@@ -31,23 +30,20 @@ public class ProcessesTrackerTask extends AsyncTask {
         ActivityManager manager = (ActivityManager) AppProfile.getContext().getSystemService(Context.ACTIVITY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = AndroidProcesses.getRunningAppProcessInfo(AppProfile.getContext());
-            for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
-                ApplicationInfo applicationInfo = SystemUtils.getForgroundApplicationByProcessName(runningAppProcessInfo);
-//                try {
-////                    if ((new AndroidAppProcess(runningAppProcessInfo.pid).foreground) && applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-//                    if ((new AndroidAppProcess(runningAppProcessInfo.pid).foreground) && applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-//
-//                        processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } catch (AndroidAppProcess.NotAndroidAppProcessException e) {
-//                    e.printStackTrace();
-//                }
-                if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-                    processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
+
+            List<ActivityManager.RunningServiceInfo> _listRunServeces = manager.getRunningServices(Integer.MAX_VALUE);
+            for (ActivityManager.RunningServiceInfo service : _listRunServeces) {
+
+                RuningTaskInfo processInfo = new RuningTaskInfo();
+                processInfo.processName = service.process;
+                processInfo.applicationName = String.valueOf(service.process);
+                ActivityManager.RunningAppProcessInfo info = new ActivityManager.RunningAppProcessInfo(service.process, service.pid, null);
+                ApplicationInfo applicationInfo = SystemUtils.getApplicationByProcessName(info);
+                if (applicationInfo != null) {
+                    processInfo.pid = service.pid;
+                    processInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
                 }
+                processInfos.add(processInfo);
             }
         } else {
             List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
@@ -59,7 +55,7 @@ public class ProcessesTrackerTask extends AsyncTask {
             }
         }
         processInfos = sortByFirstCase(processInfos);
-        ProcessTrackEvent event = new ProcessTrackEvent();
+        ServicesTrackEvent event = new ServicesTrackEvent();
         ProcessListInfo processListInfo = new ProcessListInfo();
         processListInfo.mProcessInfos = processInfos;
         event.mData = processListInfo;

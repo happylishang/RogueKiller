@@ -8,10 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!-- Base application theme. -->
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:background">@mipmap/bg</item>
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ActionBarTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/ActionBarThemeNoDivider</item>
+        <item name="actionBarStyle">@style/MyActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarThemeNoDivider" parent="@style/Theme.AppCompat.Light">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+    </style>
+
+    <style name="MyActionBarStyle" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+    </style>
 </resources>

@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.snail.roguekiller.fragment.IPageSelect;
+
 /**
  * Created by personal on 16/5/7.
  */
-abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Fragment {
+abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Fragment implements IPageSelect {
 
     protected T mPresenter;
 

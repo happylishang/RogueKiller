@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SystemUtils {
 
-    public static List<ApplicationInfo> getUserApps() {
+    public static List<ApplicationInfo> getInstalledApplications() {
         final PackageManager pm = AppProfile.getContext().getPackageManager();
         return pm.getInstalledApplications(PackageManager.GET_META_DATA);
     }
@@ -29,12 +29,46 @@ public class SystemUtils {
         return ((resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
     }
 
-    public static ApplicationInfo getApplicationByProcessName(ActivityManager.RunningAppProcessInfo item) {
+    public static ApplicationInfo getUnSystemApplicationByName(ActivityManager.RunningAppProcessInfo item) {
 
-        List<ApplicationInfo> list = SystemUtils.getUserApps();
+        List<ApplicationInfo> list = SystemUtils.getInstalledApplications();
         for (ApplicationInfo info : list) {
             if (info.processName.equals(item.processName) && !isSystemPackage(info)) {
                 return info;
+            }
+        }
+        return null;
+    }
+
+
+    public static ApplicationInfo getApplicationByProcessName(ActivityManager.RunningAppProcessInfo item) {
+
+        List<ApplicationInfo> list = SystemUtils.getInstalledApplications();
+        if (item.processName.contains(":")) {
+            String name = item.processName.split(":")[0];
+            for (ApplicationInfo info : list) {
+                if (info.processName.equals(name)) {
+                    return info;
+                }
+            }
+        } else {
+            for (ApplicationInfo info : list) {
+                if (info.processName.equals(item.processName)) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static ApplicationInfo getForgroundApplicationByProcessName(ActivityManager.RunningAppProcessInfo item) {
+
+        List<ApplicationInfo> list = SystemUtils.getInstalledApplications();
+        if (!item.processName.contains(":")) {
+            for (ApplicationInfo info : list) {
+                if (info.processName.equals(item.processName)) {
+                    return info;
+                }
             }
         }
         return null;
@@ -65,5 +99,12 @@ public class SystemUtils {
         }
         return info.versionName;
 
+    }
+
+    private void getRunningAppProcesses() {
+        ActivityManager am = (ActivityManager) AppProfile.getContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> list = am.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo rsi : list) {
+        }
     }
 }

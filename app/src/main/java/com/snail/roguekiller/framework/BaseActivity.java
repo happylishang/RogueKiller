@@ -4,7 +4,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.snail.roguekiller.R;
 
 import butterknife.ButterKnife;
 
@@ -13,6 +19,8 @@ abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppC
 
     protected T mPresenter;
     private ProgressDialog mWaitingDialog;
+    private CustomedActionbar mCustomedActionbar;
+    private View mActionBarView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,11 +35,38 @@ abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppC
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
+        setUpActionBar();
         ButterKnife.bind(this);
     }
 
+    private void setUpActionBar() {
+        ActionBar _actionBar = getSupportActionBar();
+        mCustomedActionbar = new CustomedActionbar();
+        mCustomedActionbar.mActionBar = _actionBar;
+        if (_actionBar != null) {
+            mActionBarView = LayoutInflater.from(this).inflate(R.layout.actionbar_common, null);
+            _actionBar.setDisplayShowCustomEnabled(true);
+            _actionBar.setCustomView(mActionBarView, new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
+        }
+    }
+
+    public TextView getLftTv() {
+
+        return (TextView) mActionBarView.findViewById(R.id.left);
+    }
+
+    public TextView getMiddleTv() {
+        return (TextView) mActionBarView.findViewById(R.id.middle);
+
+    }
+
+    public TextView getRightTv() {
+        return (TextView) mActionBarView.findViewById(R.id.right);
+
+    }
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (mPresenter != null) {
             mPresenter.onResume();
@@ -93,4 +128,5 @@ abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppC
             mWaitingDialog.dismiss();
         }
     }
+
 }

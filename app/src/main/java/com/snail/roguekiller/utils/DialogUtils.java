@@ -14,7 +14,7 @@ import com.snail.roguekiller.R;
  */
 public class DialogUtils {
 
-   public  interface CONFIRM_ACTION {
+    public interface CONFIRM_ACTION {
         int LETT_ACTION = 0;
         int RIGHT_ACTION = 1;
     }
@@ -23,7 +23,7 @@ public class DialogUtils {
     @NonNull
     public static Dialog createBtnDialog(Context context, String title, String left, String right, View.OnClickListener onClickListener) {
 
-        Dialog dialog =new Dialog(context);
+        Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_confirm);
         TextView titleTv = (TextView) dialog.findViewById(R.id.tv_title);

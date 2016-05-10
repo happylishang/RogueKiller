@@ -6,14 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:background="@drawable/gradient_bg"
-    android:paddingTop="8dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/icon_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="#e3e3e3"/>
+        android:background="@color/transparent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,12 +22,34 @@
         android:layout_marginLeft="8dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_process_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
-            android:text="name"/>
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_process_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
+
+            <TextView
+                android:id="@+id/tv_pid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:text="name"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
