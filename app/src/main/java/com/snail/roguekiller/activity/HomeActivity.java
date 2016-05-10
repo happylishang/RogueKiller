@@ -10,11 +10,13 @@ import android.widget.TabHost;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.framework.BaseActivity;
 import com.snail.roguekiller.presenter.HomePresenter;
+import com.snail.roguekiller.view.SlidingTabLayout;
 
 public class HomeActivity extends BaseActivity<HomePresenter> {
 
     private ViewPager mViewPager;
     private TabHost mTabHost;
+    private SlidingTabLayout mSlidingTabLayout;
 
 
     public static void startActivity(Context context) {
@@ -47,8 +49,23 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp_content);
-        mTabHost = (TabHost) findViewById(R.id.th_tabs);
+        mViewPager.setOffscreenPageLimit(3);
         mPresenter.initViewPager();
+        mTabHost = (TabHost) findViewById(R.id.th_tabs);
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sld_tab_layout);
+        mSlidingTabLayout.setCustomTabView(R.layout.item_slide_bar, R.id.title);
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.red);
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return getResources().getColor(R.color.black);
+            }
+        });
+        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     private void initListener() {
@@ -58,6 +75,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
 
     public void initViewPager(FragmentPagerAdapter pagerAdapter) {
         mViewPager.setAdapter(pagerAdapter);
+
     }
 
     public void setCurrentPager(int postion) {

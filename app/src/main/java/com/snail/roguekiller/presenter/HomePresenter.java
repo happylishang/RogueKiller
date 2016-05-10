@@ -46,7 +46,7 @@ public class HomePresenter extends BaseActivityPresenter<HomeActivity>
 
     @Override
     public void onPageSelected(int position) {
-        homePagerAdapter.getItem(position).OnPageSelect();
+         homePagerAdapter.getItem(position).OnPageSelect();
     }
 
     @Override

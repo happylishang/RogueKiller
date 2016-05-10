@@ -21,10 +21,21 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     static private Class[] mFragments = {
             ProcessListFragment.class,
             ServiceListFragment.class
+//            ,
+//            ProcessListFragment.class,
+//            ServiceListFragment.class,
+//            ProcessListFragment.class,
+//            ServiceListFragment.class
     };
 
     public String[] sTabTexts = new String[]{
+            ResourcesUtil.getString(R.string.process_list),
             ResourcesUtil.getString(R.string.process_list)
+//            ,
+//            ResourcesUtil.getString(R.string.process_list),
+//            ResourcesUtil.getString(R.string.process_list),
+//            ResourcesUtil.getString(R.string.process_list),
+//            ResourcesUtil.getString(R.string.process_list)
     };
 
     public HomePagerAdapter(FragmentManager fm) {
@@ -59,6 +70,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return mFragments.length;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return sTabTexts[position];
     }
 
 }
