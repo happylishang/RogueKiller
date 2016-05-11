@@ -11,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
-import com.snail.roguekiller.framework.BaseActivity;
-import com.snail.roguekiller.framework.BaseFragment;
 import com.snail.roguekiller.presenter.ServiceListPresenter;
 import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by personal on 16/5/7.
  */
-public class ServiceListFragment extends BaseFragment<ServiceListPresenter> {
+public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> {
 
 
     private View rootView;
@@ -34,12 +31,16 @@ public class ServiceListFragment extends BaseFragment<ServiceListPresenter> {
         return new ServiceListPresenter(this);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_process_list, container, false);
         initView();
-        initActionBar();
         ButterKnife.bind(this, rootView);
         return rootView;
     }
@@ -63,7 +64,7 @@ public class ServiceListFragment extends BaseFragment<ServiceListPresenter> {
         initSwipViews();
     }
 
-    public void initSwipViews(){
+    public void initSwipViews() {
         swpProcessList = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
         swpProcessList.setOnRefreshListener(mPresenter);
         swpProcessList.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
@@ -92,31 +93,20 @@ public class ServiceListFragment extends BaseFragment<ServiceListPresenter> {
         }
     }
 
-    @OnClick(R.id.fab_refresh)
-    void refresh() {
-        mPresenter.refresh();
-    }
-
-    private void initActionBar() {
-        if (getActivity() instanceof BaseActivity) {
-            BaseActivity _activity = (BaseActivity) getActivity();
-            _activity.getLftTv().setVisibility(View.GONE);
-            _activity.getMiddleTv().setText("运行的服务");
-            _activity.getRightTv().setText("选项");
-            _activity.getRightTv().setOnClickListener(mPresenter);
-        }
-    }
-
     public void showFilterSelection() {
 
     }
 
     @Override
     public void OnPageSelect() {
-        initActionBar();
     }
 
     public void onRefreshComplete() {
         swpProcessList.setRefreshing(false);
+    }
+
+    @Override
+    public void OnPageRefresh() {
+        mPresenter.refresh();
     }
 }

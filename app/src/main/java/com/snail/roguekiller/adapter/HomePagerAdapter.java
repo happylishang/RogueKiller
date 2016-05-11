@@ -4,9 +4,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.snail.roguekiller.R;
+import com.snail.roguekiller.fragment.HomeFragmentItem;
 import com.snail.roguekiller.fragment.ProcessListFragment;
 import com.snail.roguekiller.fragment.ServiceListFragment;
-import com.snail.roguekiller.framework.BaseFragment;
 import com.snail.roguekiller.utils.ResourcesUtil;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import java.util.HashMap;
  */
 public class HomePagerAdapter extends FragmentPagerAdapter {
 
-    private HashMap<Integer, BaseFragment> mFragmentHashMap = new HashMap<>();
+    private HashMap<Integer, HomeFragmentItem> mFragmentHashMap = new HashMap<>();
 
     static private Class[] mFragments = {
             ProcessListFragment.class,
@@ -47,13 +47,13 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public BaseFragment getItem(int position) {
-        BaseFragment fragment = null;
+    public HomeFragmentItem getItem(int position) {
+        HomeFragmentItem fragment = null;
         if (mFragmentHashMap.get(position) == null) {
             Class frgClass = mFragments[position];
             try {
                 frgClass.newInstance();
-                fragment = (BaseFragment) frgClass.newInstance();
+                fragment = (HomeFragmentItem) frgClass.newInstance();
                 mFragmentHashMap.put(position, fragment);
             } catch (InstantiationException e) {
                 e.printStackTrace();

@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.HomeActivity">
 
-    <com.snail.roguekiller.view.SlidingTabLayout
-        android:id="@+id/sld_tab_layout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <LinearLayout
+
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_content"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
-    <TabHost
-        android:id="@+id/th_tabs"
-        android:layout_width="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.HomeActivity">
+
+        <com.snail.roguekiller.view.SlidingTabLayout
+            android:id="@+id/sld_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_refresh"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
-</LinearLayout>
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@android:drawable/ic_menu_rotate"/>
+</FrameLayout>
+
+
+

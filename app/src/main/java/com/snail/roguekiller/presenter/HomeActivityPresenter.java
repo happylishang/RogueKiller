@@ -2,7 +2,6 @@ package com.snail.roguekiller.presenter;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TabHost;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.activity.HomeActivity;
@@ -13,8 +12,8 @@ import com.snail.roguekiller.utils.ResourcesUtil;
 /**
  * Created by personal on 16/5/7.
  */
-public class HomePresenter extends BaseActivityPresenter<HomeActivity>
-        implements View.OnClickListener, TabHost.OnTabChangeListener,
+public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
+        implements View.OnClickListener,
         ViewPager.OnPageChangeListener {
 
     private HomePagerAdapter homePagerAdapter;
@@ -24,7 +23,9 @@ public class HomePresenter extends BaseActivityPresenter<HomeActivity>
     };
 
 
-    public HomePresenter(HomeActivity target) {
+    private int mCurrentPostion =0;
+
+    public HomeActivityPresenter(HomeActivity target) {
         super(target);
     }
 
@@ -46,7 +47,7 @@ public class HomePresenter extends BaseActivityPresenter<HomeActivity>
 
     @Override
     public void onPageSelected(int position) {
-         homePagerAdapter.getItem(position).OnPageSelect();
+        mCurrentPostion = position;
     }
 
     @Override
@@ -54,8 +55,7 @@ public class HomePresenter extends BaseActivityPresenter<HomeActivity>
 
     }
 
-    @Override
-    public void onTabChanged(String s) {
-
+    public void refresh() {
+        homePagerAdapter.getItem(mCurrentPostion).OnPageRefresh();
     }
 }

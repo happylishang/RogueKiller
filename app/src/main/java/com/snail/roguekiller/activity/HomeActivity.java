@@ -3,19 +3,20 @@ package com.snail.roguekiller.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.TabHost;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.framework.BaseActivity;
-import com.snail.roguekiller.presenter.HomePresenter;
+import com.snail.roguekiller.presenter.HomeActivityPresenter;
 import com.snail.roguekiller.view.SlidingTabLayout;
 
-public class HomeActivity extends BaseActivity<HomePresenter> {
+import butterknife.OnClick;
+
+public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
     private ViewPager mViewPager;
-    private TabHost mTabHost;
     private SlidingTabLayout mSlidingTabLayout;
 
 
@@ -25,33 +26,31 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
         context.startActivity(intent);
     }
 
-    public int tabNormalIcons[] = {
-
-    };
-
-    public int mTabSelectedIcons[] = {
-
-    };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            savedInstanceState.putParcelable("android:support:fragments", null);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
+        getSupportActionBar().hide();
         initListener();
+        if (savedInstanceState != null) {
+            mViewPager.setCurrentItem(savedInstanceState.getInt("pos"));
+        }
     }
 
     @Override
-    protected HomePresenter createPresenter() {
-        return new HomePresenter(this);
+    protected HomeActivityPresenter createPresenter() {
+        return new HomeActivityPresenter(this);
     }
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.vp_content);
         mViewPager.setOffscreenPageLimit(3);
         mPresenter.initViewPager();
-        mTabHost = (TabHost) findViewById(R.id.th_tabs);
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sld_tab_layout);
         mSlidingTabLayout.setCustomTabView(R.layout.item_slide_bar, R.id.title);
         mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -70,21 +69,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
 
     private void initListener() {
         mViewPager.addOnPageChangeListener(mPresenter);
-        mTabHost.setOnTabChangedListener(mPresenter);
     }
 
     public void initViewPager(FragmentPagerAdapter pagerAdapter) {
         mViewPager.setAdapter(pagerAdapter);
-
-    }
-
-    public void setCurrentPager(int postion) {
-        mViewPager.setCurrentItem(postion);
-
-    }
-
-    public void setCurrentTab(int postion) {
-        mTabHost.setCurrentTab(postion);
 
     }
 
@@ -93,4 +81,15 @@ public class HomeActivity extends BaseActivity<HomePresenter> {
         moveTaskToBack(true);
     }
 
+    @OnClick(R.id.fab_refresh)
+    void refresh() {
+        mPresenter.refresh();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("pos", mViewPager.getCurrentItem());
+
+    }
 }

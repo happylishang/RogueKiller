@@ -3,6 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
+              android:background="@android:color/transparent"
               android:orientation="vertical">
 
     <TextView
@@ -12,6 +13,7 @@
         android:gravity="center"
         android:minHeight="48dp"
         android:minWidth="72dp"
+        android:background="@android:color/transparent"
         android:textColor="@color/selector_red_white"/>
 
     <ImageView

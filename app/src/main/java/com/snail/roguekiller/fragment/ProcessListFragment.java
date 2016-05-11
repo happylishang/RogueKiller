@@ -11,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
-import com.snail.roguekiller.framework.BaseActivity;
-import com.snail.roguekiller.framework.BaseFragment;
 import com.snail.roguekiller.presenter.ProcessListPresenter;
 import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by personal on 16/5/7.
  */
-public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
+public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> {
 
 
     private View rootView;
@@ -47,7 +44,6 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initActionBar();
     }
 
     private void initView() {
@@ -59,7 +55,7 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
         initSwipViews();
     }
 
-    public void initSwipViews(){
+    public void initSwipViews() {
         swpProcessList = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
         swpProcessList.setOnRefreshListener(mPresenter);
         //加载颜色是循环播放的，只要没有完成刷新就会一直循环，color1>color2>color3>color4
@@ -90,20 +86,6 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
         }
     }
 
-    @OnClick(R.id.fab_refresh)
-    void refresh() {
-        mPresenter.refresh();
-    }
-
-    private void initActionBar() {
-        if (getActivity() instanceof BaseActivity) {
-            BaseActivity _activity = (BaseActivity) getActivity();
-            _activity.getLftTv().setVisibility(View.GONE);
-            _activity.getMiddleTv().setText("运行的进程");
-            _activity.getRightTv().setText("选项");
-            _activity.getRightTv().setOnClickListener(mPresenter);
-        }
-    }
 
     public void showFilterSelection() {
 
@@ -111,10 +93,14 @@ public class ProcessListFragment extends BaseFragment<ProcessListPresenter> {
 
     @Override
     public void OnPageSelect() {
-        initActionBar();
     }
 
     public void onRefreshComplete() {
         swpProcessList.setRefreshing(false);
+    }
+
+    @Override
+    public void OnPageRefresh() {
+        mPresenter.refresh();
     }
 }
