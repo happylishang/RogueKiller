@@ -2,7 +2,9 @@ package com.snail.roguekiller.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +27,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
     private View rootView;
     private RecyclerView mProcessList;
 
-    private SwipeRefreshLayout swpProcessList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected ProcessListPresenter createPresenter() {
@@ -41,30 +43,26 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         return rootView;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 
     private void initView() {
+        initSwipViews();
         mProcessList = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mProcessList.setLayoutManager(layoutManager);
         mPresenter.initAdapter();
-        initSwipViews();
     }
 
     public void initSwipViews() {
-        swpProcessList = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
-        swpProcessList.setOnRefreshListener(mPresenter);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
+        mSwipeRefreshLayout.setOnRefreshListener(mPresenter);
         //加载颜色是循环播放的，只要没有完成刷新就会一直循环，color1>color2>color3>color4
         // 设置下拉圆圈上的颜色，蓝色、绿色、橙色、红色
-        swpProcessList.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_blue_bright);
-        swpProcessList.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
-        swpProcessList.setProgressBackgroundColorSchemeResource(R.color.white); // 设定下拉圆圈的背景
-        swpProcessList.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
+        mSwipeRefreshLayout.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white); // 设定下拉圆圈的背景
+        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
     }
 
     public void initAdapter(RecyclerView.Adapter adapter) {
@@ -96,12 +94,25 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
     }
 
     public void onRefreshComplete() {
-        swpProcessList.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void onRefreshStart() {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
     }
 
     @Override
     public void OnPageRefresh() {
-        swpProcessList.setRefreshing(true);
         mPresenter.refresh();
+    }
+
+    @Override
+    public void showKillMessage(@NonNull String content) {
+        Snackbar.make(mSwipeRefreshLayout, content, Snackbar.LENGTH_SHORT).show();
     }
 }

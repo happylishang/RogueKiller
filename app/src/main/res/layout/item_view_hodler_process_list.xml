@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lv_container"
     android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:background="@drawable/gradient_bg"
+    android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
-    android:paddingLeft="8dp"
     android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/icon_img"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginLeft="8dp"
         android:background="@color/transparent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toRightOf="@id/icon_img"
         android:orientation="vertical">
 
         <LinearLayout
@@ -49,7 +51,12 @@
                 android:background="@color/transparent"
                 android:text="name"/>
         </LinearLayout>
-
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/darker_gray"/>
+
+</RelativeLayout>

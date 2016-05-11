@@ -1,6 +1,5 @@
 package com.snail.roguekiller.presenter;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.snail.roguekiller.R;
@@ -10,8 +9,8 @@ import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.eventbus.BaseEvent;
 import com.snail.roguekiller.eventbus.EventConstants;
 import com.snail.roguekiller.eventbus.ProcessTrackEvent;
+import com.snail.roguekiller.fragment.HomeFragmentItem;
 import com.snail.roguekiller.fragment.ProcessListFragment;
-import com.snail.roguekiller.framework.BaseFragmentPresenter;
 import com.snail.roguekiller.task.ProcessesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
 import com.snail.roguekiller.utils.SystemUtils;
@@ -21,15 +20,15 @@ import java.util.ArrayList;
 /**
  * Created by personal on 16/5/7.
  */
-public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragment> implements
+public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListFragment> implements
         ProcessListAdapter.OnItemClickListener,
-        View.OnClickListener,
-        SwipeRefreshLayout.OnRefreshListener {
-
+        View.OnClickListener {
 
     private ProcessListAdapter mAdapter;
     private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
+    private HomeFragmentItem.Filter mFilter = HomeFragmentItem.Filter.USER_ONLY;
+    private HomeFragmentItem.Action mAction = HomeFragmentItem.Action.CLIKC;
 
     public ProcessListPresenter(ProcessListFragment target) {
         super(target);
@@ -39,12 +38,7 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
         mAdapter = new ProcessListAdapter(mProcessInfos);
         mTarget.initAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        startSearchTask();
-    }
-
-
-    private void startSearchTask() {
-        new ProcessesTrackerTask().execute();
+        refresh();
     }
 
     @Override
@@ -67,9 +61,21 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
         mCurrentOperation = position;
         switch (view.getId()) {
             case R.id.lv_container:
-                mTarget.showConfirmDialog(position);
+                killProcessImadiate(view, position);
+//                mTarget.showConfirmDialog(position);
                 break;
         }
+    }
+
+    private void killProcessImadiate(View view, int position) {
+        mTarget.showKillMessage(mProcessInfos.get(position).applicationName + " has been killed !");
+        mProcessInfos.remove(position);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.notifyDataSetChanged();
+            }
+        }, 200);
     }
 
     @Override
@@ -92,17 +98,13 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
         }
         switch (view.getId()) {
             case R.id.right:
-                startSearchTask();
+                refresh();
                 break;
         }
     }
 
     public void refresh() {
-        startSearchTask();
-    }
-
-    @Override
-    public void onRefresh() {
-        refresh();
+        new ProcessesTrackerTask().execute();
+        mTarget.onRefreshStart();
     }
 }

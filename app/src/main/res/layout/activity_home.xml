@@ -21,39 +21,33 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title=" "/>
 
     </android.support.design.widget.AppBarLayout>
 
 
-    <FrameLayout
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activity.HomeActivity">
 
-        <LinearLayout
-            xmlns:tools="http://schemas.android.com/tools"
+        <com.snail.roguekiller.view.SlidingTabLayout
+            android:id="@+id/sld_tab_layout"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".activity.HomeActivity">
+            android:layout_weight="1"/>
 
-            <com.snail.roguekiller.view.SlidingTabLayout
-                android:id="@+id/sld_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"/>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_content"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-
-    </FrameLayout>
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_refresh"

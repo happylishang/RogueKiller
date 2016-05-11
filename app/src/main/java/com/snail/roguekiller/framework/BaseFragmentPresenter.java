@@ -30,12 +30,19 @@ public class BaseFragmentPresenter<T extends BaseFragment> extends BasePresenter
 
     }
 
+    public void onActivityCreated() {
+
+    }
     public void onDestroy() {
 
         EventBus.getDefault().unregister(this);
     }
 
     public void onPause() {
+
+    }
+
+    public void  onViewCreated(){
 
     }
 

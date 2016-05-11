@@ -1,17 +1,15 @@
 package com.snail.roguekiller.presenter;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.adapter.ProcessListAdapter;
-import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.datamodel.ProcessListInfo;
+import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.eventbus.BaseEvent;
 import com.snail.roguekiller.eventbus.EventConstants;
 import com.snail.roguekiller.eventbus.ServicesTrackEvent;
 import com.snail.roguekiller.fragment.ServiceListFragment;
-import com.snail.roguekiller.framework.BaseFragmentPresenter;
 import com.snail.roguekiller.task.ServicesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
 import com.snail.roguekiller.utils.SystemUtils;
@@ -21,9 +19,9 @@ import java.util.ArrayList;
 /**
  * Created by personal on 16/5/7.
  */
-public class ServiceListPresenter extends BaseFragmentPresenter<ServiceListFragment> implements
+public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListFragment> implements
         ProcessListAdapter.OnItemClickListener,
-        View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+        View.OnClickListener {
 
 
     private ProcessListAdapter mAdapter;
@@ -38,12 +36,13 @@ public class ServiceListPresenter extends BaseFragmentPresenter<ServiceListFragm
         mAdapter = new ProcessListAdapter(mProcessInfos);
         mTarget.initAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        startSearchTask();
+
     }
 
-
-    private void startSearchTask() {
-        new ServicesTrackerTask().execute();
+    @Override
+    public void onViewCreated() {
+        super.onViewCreated();
+        refresh();
     }
 
     @Override
@@ -89,19 +88,12 @@ public class ServiceListPresenter extends BaseFragmentPresenter<ServiceListFragm
                     break;
             }
         }
-        switch (view.getId()) {
-            case R.id.right:
-                startSearchTask();
-                break;
-        }
+
     }
 
     public void refresh() {
-        startSearchTask();
+        new ServicesTrackerTask().execute();
+        mTarget.onRefreshStart();
     }
 
-    @Override
-    public void onRefresh() {
-        refresh();
-    }
 }

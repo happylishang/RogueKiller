@@ -7,7 +7,7 @@ public class BasePresenter<T> {
 
     protected T mTarget;
 
-    BasePresenter(T target) {
+    public BasePresenter(T target) {
         this.mTarget = target;
     }
 

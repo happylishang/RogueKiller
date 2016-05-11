@@ -30,7 +30,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
 
     public String[] sTabTexts = new String[]{
             ResourcesUtil.getString(R.string.process_list),
-            ResourcesUtil.getString(R.string.process_list)
+            ResourcesUtil.getString(R.string.service_list)
 //            ,
 //            ResourcesUtil.getString(R.string.process_list),
 //            ResourcesUtil.getString(R.string.process_list),

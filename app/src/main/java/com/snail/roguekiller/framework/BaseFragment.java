@@ -32,6 +32,18 @@ abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Frag
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mIsViewInflated = true;
+        if (mPresenter != null) {
+            mPresenter.onViewCreated();
+        }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (mPresenter != null) {
+            mPresenter.onActivityCreated();
+        }
+
     }
 
     @Override
@@ -78,6 +90,7 @@ abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Frag
             ((BaseActivity) getActivity()).showWaiting();
         }
     }
+
     public void stopWaiting() {
         if (getActivity() instanceof BaseActivity) {
             ((BaseActivity) getActivity()).stopWaiting();
