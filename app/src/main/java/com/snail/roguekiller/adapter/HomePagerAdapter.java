@@ -42,10 +42,6 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
-    public HomePagerAdapter(FragmentManager fm, String[] sTabTexts) {
-        super(fm);
-    }
-
     @Override
     public HomeFragmentItem getItem(int position) {
         HomeFragmentItem fragment = null;

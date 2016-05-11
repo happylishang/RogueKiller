@@ -112,6 +112,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.menu_setting:
+                AboutActivity.startActivity(this);
                 break;
             case R.id.menu_filter:
                 item.setChecked(!item.isChecked());

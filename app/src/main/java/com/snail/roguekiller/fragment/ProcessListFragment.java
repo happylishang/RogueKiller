@@ -63,7 +63,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_blue_bright);
         mSwipeRefreshLayout.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white); // 设定下拉圆圈的背景
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.colorPrimary); // 设定下拉圆圈的背景
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
     }
 

@@ -3,7 +3,6 @@ package com.snail.roguekiller.presenter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.snail.roguekiller.R;
 import com.snail.roguekiller.activity.HomeActivity;
 import com.snail.roguekiller.adapter.HomePagerAdapter;
 import com.snail.roguekiller.eventbus.BaseEvent;
@@ -11,7 +10,6 @@ import com.snail.roguekiller.eventbus.EventConstants;
 import com.snail.roguekiller.eventbus.ToolbarRefreshEvent;
 import com.snail.roguekiller.fragment.IPageFilter;
 import com.snail.roguekiller.framework.BaseActivityPresenter;
-import com.snail.roguekiller.utils.ResourcesUtil;
 
 /**
  * Created by personal on 16/5/7.
@@ -22,10 +20,6 @@ public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
 
     private HomePagerAdapter homePagerAdapter;
 
-    public String[] sTabTexts = new String[]{
-            ResourcesUtil.getString(R.string.process_list)
-    };
-
 
     private int mCurrentPostion = 0;
 
@@ -35,7 +29,7 @@ public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
 
 
     public void initViewPager() {
-        homePagerAdapter = new HomePagerAdapter(mTarget.getSupportFragmentManager(), sTabTexts);
+        homePagerAdapter = new HomePagerAdapter(mTarget.getSupportFragmentManager() );
         mTarget.initViewPager(homePagerAdapter);
     }
 
