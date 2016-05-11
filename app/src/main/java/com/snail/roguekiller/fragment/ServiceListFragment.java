@@ -26,7 +26,7 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
 
     private View rootView;
     private RecyclerView mProcessList;
-    private SwipeRefreshLayout swpProcessList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected ServiceListPresenter createPresenter() {
@@ -68,13 +68,13 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
     }
 
     public void initSwipViews() {
-        swpProcessList = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
-        swpProcessList.setOnRefreshListener(mPresenter);
-        swpProcessList.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swp_process_list);
+        mSwipeRefreshLayout.setOnRefreshListener(mPresenter);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_blue_bright);
-        swpProcessList.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
-        swpProcessList.setProgressBackgroundColorSchemeResource(R.color.white); // 设定下拉圆圈的背景
-        swpProcessList.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
+        mSwipeRefreshLayout.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white); // 设定下拉圆圈的背景
+        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
     }
 
     public void initAdapter(RecyclerView.Adapter adapter) {
@@ -96,27 +96,30 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
         }
     }
 
-    public void showFilterSelection() {
-
-    }
-
-    @Override
-    public void OnPageSelect() {
-    }
-
     public void onRefreshComplete() {
-        swpProcessList.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void OnPageRefresh() {
         mPresenter.refresh();
     }
+
     public void onRefreshStart() {
-        swpProcessList.setRefreshing(true);
+
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
     }
+
     @Override
-   public void showKillMessage(@NonNull String content) {
-        Snackbar.make(swpProcessList, content, Snackbar.LENGTH_SHORT).show();
+    public void showKillMessage(@NonNull String content) {
+        Snackbar.make(mSwipeRefreshLayout, content, Snackbar.LENGTH_SHORT).show();
     }
+
+
 }
+

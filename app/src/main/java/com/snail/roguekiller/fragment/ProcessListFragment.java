@@ -13,10 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
+import com.snail.roguekiller.datamodel.ToolbarStates;
+import com.snail.roguekiller.eventbus.ToolbarRefreshEvent;
 import com.snail.roguekiller.presenter.ProcessListPresenter;
 import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by personal on 16/5/7.
@@ -26,7 +29,6 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
 
     private View rootView;
     private RecyclerView mProcessList;
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -89,10 +91,6 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
 
     }
 
-    @Override
-    public void OnPageSelect() {
-    }
-
     public void onRefreshComplete() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -112,7 +110,22 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
     }
 
     @Override
+    public void refreshToolbar() {
+        ToolbarRefreshEvent event = new ToolbarRefreshEvent();
+        ToolbarStates toolbarStates = new ToolbarStates();
+        toolbarStates.processTyep = mCurrentType;
+        event.mToolbarStates = toolbarStates;
+        EventBus.getDefault().post(event);
+    }
+
+    @Override
     public void showKillMessage(@NonNull String content) {
         Snackbar.make(mSwipeRefreshLayout, content, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void OnPageFilter(int type) {
+        mPresenter.OnPageFilter(type);
+        mCurrentType = type;
     }
 }

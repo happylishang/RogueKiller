@@ -24,6 +24,7 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
         ProcessListAdapter.OnItemClickListener,
         View.OnClickListener {
 
+
     private ProcessListAdapter mAdapter;
     private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
@@ -69,6 +70,7 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
 
     private void killProcessImadiate(View view, int position) {
         mTarget.showKillMessage(mProcessInfos.get(position).applicationName + " has been killed !");
+        SystemUtils.killBackgroudApplication(mProcessInfos.get(position).packageName);
         mProcessInfos.remove(position);
         view.postDelayed(new Runnable() {
             @Override
@@ -104,7 +106,14 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
     }
 
     public void refresh() {
-        new ProcessesTrackerTask().execute();
+        new ProcessesTrackerTask().execute(mProcessType);
+        mTarget.onRefreshStart();
+    }
+
+    @Override
+    public void OnPageFilter(int type) {
+        mProcessType = type;
+        new ProcessesTrackerTask().execute(type);
         mTarget.onRefreshStart();
     }
 }

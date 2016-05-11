@@ -6,6 +6,10 @@ import android.view.View;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.activity.HomeActivity;
 import com.snail.roguekiller.adapter.HomePagerAdapter;
+import com.snail.roguekiller.eventbus.BaseEvent;
+import com.snail.roguekiller.eventbus.EventConstants;
+import com.snail.roguekiller.eventbus.ToolbarRefreshEvent;
+import com.snail.roguekiller.fragment.IPageFilter;
 import com.snail.roguekiller.framework.BaseActivityPresenter;
 import com.snail.roguekiller.utils.ResourcesUtil;
 
@@ -14,7 +18,7 @@ import com.snail.roguekiller.utils.ResourcesUtil;
  */
 public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
         implements View.OnClickListener,
-        ViewPager.OnPageChangeListener {
+        ViewPager.OnPageChangeListener, IPageFilter {
 
     private HomePagerAdapter homePagerAdapter;
 
@@ -23,7 +27,7 @@ public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
     };
 
 
-    private int mCurrentPostion =0;
+    private int mCurrentPostion = 0;
 
     public HomeActivityPresenter(HomeActivity target) {
         super(target);
@@ -48,6 +52,7 @@ public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
     @Override
     public void onPageSelected(int position) {
         mCurrentPostion = position;
+        homePagerAdapter.getItem(mCurrentPostion).OnPageSelect();
     }
 
     @Override
@@ -57,5 +62,19 @@ public class HomeActivityPresenter extends BaseActivityPresenter<HomeActivity>
 
     public void refresh() {
         homePagerAdapter.getItem(mCurrentPostion).OnPageRefresh();
+    }
+
+    @Override
+    public void OnPageFilter(int type) {
+        homePagerAdapter.getItem(mCurrentPostion).OnPageFilter(type);
+    }
+
+    @Override
+    public void onSKEventMainThread(BaseEvent event) {
+        super.onSKEventMainThread(event);
+        if (event.mEventType == EventConstants.TOOL_BAR_REFRESH) {
+            ToolbarRefreshEvent refreshEvent = (ToolbarRefreshEvent) event;
+            mTarget.refreshToolbar(refreshEvent.mToolbarStates);
+        }
     }
 }

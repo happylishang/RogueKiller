@@ -41,19 +41,19 @@ public class SystemUtils {
     }
 
 
-    public static ApplicationInfo getApplicationByProcessName(ActivityManager.RunningAppProcessInfo item) {
+    public static ApplicationInfo getServiceProcessByName(ActivityManager.RunningAppProcessInfo item) {
 
         List<ApplicationInfo> list = SystemUtils.getInstalledApplications();
         if (item.processName.contains(":")) {
             String name = item.processName.split(":")[0];
             for (ApplicationInfo info : list) {
-                if (info.processName.equals(name)) {
+                if (  info.processName.equals(name)) {
                     return info;
                 }
             }
         } else {
             for (ApplicationInfo info : list) {
-                if (info.processName.equals(item.processName)) {
+                if (  info.processName.equals(item.processName)) {
                     return info;
                 }
             }
@@ -61,6 +61,25 @@ public class SystemUtils {
         return null;
     }
 
+    public static ApplicationInfo getUnSystemServiceProcessByName(ActivityManager.RunningAppProcessInfo item) {
+
+        List<ApplicationInfo> list = SystemUtils.getInstalledApplications();
+        if (item.processName.contains(":")) {
+            String name = item.processName.split(":")[0];
+            for (ApplicationInfo info : list) {
+                if (!isSystemPackage(info) && info.processName.equals(name)) {
+                    return info;
+                }
+            }
+        } else {
+            for (ApplicationInfo info : list) {
+                if (!isSystemPackage(info) && info.processName.equals(item.processName)) {
+                    return info;
+                }
+            }
+        }
+        return null;
+    }
     public static ApplicationInfo getForgroundApplicationByProcessName(ActivityManager.RunningAppProcessInfo item) {
 
         List<ApplicationInfo> list = SystemUtils.getInstalledApplications();

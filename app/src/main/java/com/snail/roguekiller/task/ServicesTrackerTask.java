@@ -8,12 +8,12 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
-import android.os.Build;
 
-import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.datamodel.ProcessListInfo;
+import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.eventbus.ServicesTrackEvent;
 import com.snail.roguekiller.utils.AppProfile;
+import com.snail.roguekiller.utils.Constants;
 import com.snail.roguekiller.utils.SystemUtils;
 
 import java.util.ArrayList;
@@ -21,37 +21,28 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class ServicesTrackerTask extends AsyncTask {
+public class ServicesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
 
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected Integer doInBackground(Integer[] objects) {
+        int type = objects.length > 0 ? objects[0].intValue() : Constants.ProcessType.ALL;
         ArrayList<RuningTaskInfo> processInfos = new ArrayList<>();
         ActivityManager manager = (ActivityManager) AppProfile.getContext().getSystemService(Context.ACTIVITY_SERVICE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            List<ActivityManager.RunningServiceInfo> _listRunServeces = manager.getRunningServices(Integer.MAX_VALUE);
-            for (ActivityManager.RunningServiceInfo service : _listRunServeces) {
-
-                RuningTaskInfo processInfo = new RuningTaskInfo();
-                processInfo.processName = service.process;
-                processInfo.applicationName = String.valueOf(service.process);
-                ActivityManager.RunningAppProcessInfo info = new ActivityManager.RunningAppProcessInfo(service.process, service.pid, null);
-                ApplicationInfo applicationInfo = SystemUtils.getApplicationByProcessName(info);
-                if (applicationInfo != null) {
-                    processInfo.pid = service.pid;
-                    processInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
-                }
+        List<ActivityManager.RunningServiceInfo> _listRunServeces = manager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo service : _listRunServeces) {
+            RuningTaskInfo processInfo = new RuningTaskInfo();
+            processInfo.packageName = service.clientPackage;
+            processInfo.processName = service.process;
+            processInfo.applicationName = String.valueOf(service.process);
+            ActivityManager.RunningAppProcessInfo info = new ActivityManager.RunningAppProcessInfo(service.process, service.pid, null);
+            ApplicationInfo applicationInfo = getApplciationInfo(info, type);
+            if (applicationInfo != null) {
+                processInfo.pid = service.pid;
+                processInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
                 processInfos.add(processInfo);
-            }
-        } else {
-            List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
-            for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
-                ApplicationInfo applicationInfo = SystemUtils.getApplicationByProcessName(runningAppProcessInfo);
-                if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-                    processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
-                }
             }
         }
         processInfos = sortByFirstCase(processInfos);
@@ -78,5 +69,15 @@ public class ServicesTrackerTask extends AsyncTask {
             _tempInfos.add(i, _info);
         }
         return _tempInfos;
+    }
+
+    private ApplicationInfo getApplciationInfo(ActivityManager.RunningAppProcessInfo runningAppProcessInfo, int type) {
+        ApplicationInfo applicationInfo;
+        if (type == Constants.ProcessType.ALL) {
+            applicationInfo = SystemUtils.getServiceProcessByName(runningAppProcessInfo);
+        } else {
+            applicationInfo = SystemUtils.getUnSystemServiceProcessByName(runningAppProcessInfo);
+        }
+        return applicationInfo;
     }
 }

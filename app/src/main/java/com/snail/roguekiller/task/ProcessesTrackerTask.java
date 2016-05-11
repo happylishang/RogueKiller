@@ -15,6 +15,7 @@ import com.snail.roguekiller.datamodel.ProcessListInfo;
 import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.eventbus.ProcessTrackEvent;
 import com.snail.roguekiller.utils.AppProfile;
+import com.snail.roguekiller.utils.Constants;
 import com.snail.roguekiller.utils.SystemUtils;
 
 import java.util.ArrayList;
@@ -22,29 +23,19 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class ProcessesTrackerTask extends AsyncTask {
+public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
 
 
     @Override
-    protected Object doInBackground(Object[] objects) {
+    protected Integer doInBackground(Integer[] objects) {
+        int type = objects.length > 0 ? objects[0].intValue() : Constants.ProcessType.ALL;
         ArrayList<RuningTaskInfo> processInfos = new ArrayList<>();
         ActivityManager manager = (ActivityManager) AppProfile.getContext().getSystemService(Context.ACTIVITY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = AndroidProcesses.getRunningAppProcessInfo(AppProfile.getContext());
             for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
-                ApplicationInfo applicationInfo = SystemUtils.getForgroundApplicationByProcessName(runningAppProcessInfo);
-//                try {
-////                    if ((new AndroidAppProcess(runningAppProcessInfo.pid).foreground) && applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-//                    if ((new AndroidAppProcess(runningAppProcessInfo.pid).foreground) && applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-//
-//                        processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } catch (AndroidAppProcess.NotAndroidAppProcessException e) {
-//                    e.printStackTrace();
-//                }
+                ApplicationInfo applicationInfo = getApplciationInfo(runningAppProcessInfo, type);
                 if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
                     processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
                 }
@@ -52,7 +43,7 @@ public class ProcessesTrackerTask extends AsyncTask {
         } else {
             List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
             for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
-                ApplicationInfo applicationInfo = SystemUtils.getApplicationByProcessName(runningAppProcessInfo);
+                ApplicationInfo applicationInfo = getApplciationInfo(runningAppProcessInfo, type);
                 if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
                     processInfos.add(RuningTaskInfo.generateInstance(runningAppProcessInfo, applicationInfo));
                 }
@@ -82,5 +73,15 @@ public class ProcessesTrackerTask extends AsyncTask {
             _tempInfos.add(i, _info);
         }
         return _tempInfos;
+    }
+
+    private ApplicationInfo getApplciationInfo(ActivityManager.RunningAppProcessInfo runningAppProcessInfo, int type) {
+        ApplicationInfo applicationInfo;
+        if (type == Constants.ProcessType.ALL) {
+            applicationInfo = SystemUtils.getForgroundApplicationByProcessName(runningAppProcessInfo);
+        } else {
+            applicationInfo = SystemUtils.getUnSystemApplicationByName(runningAppProcessInfo);
+        }
+        return applicationInfo;
     }
 }

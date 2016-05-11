@@ -36,14 +36,9 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         mAdapter = new ProcessListAdapter(mProcessInfos);
         mTarget.initAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-
-    }
-
-    @Override
-    public void onViewCreated() {
-        super.onViewCreated();
         refresh();
     }
+
 
     @Override
     public void onSKEventMainThread(BaseEvent event) {
@@ -78,7 +73,7 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
             switch (tag) {
                 case DialogUtils.CONFIRM_ACTION.LETT_ACTION:
                     RuningTaskInfo info = mProcessInfos.get(mCurrentOperation);
-                    SystemUtils.killBackgroudApplication(info.packageName);
+                    SystemUtils.killBackgroudApplication(info.applicationName);
                     mProcessInfos.remove(mCurrentOperation);
                     mAdapter.notifyDataSetChanged();
                     break;
@@ -92,8 +87,14 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
     }
 
     public void refresh() {
-        new ServicesTrackerTask().execute();
+        new ServicesTrackerTask().execute(mProcessType);
         mTarget.onRefreshStart();
     }
 
+    @Override
+    public void OnPageFilter(int type) {
+        mProcessType = type;
+        new ServicesTrackerTask().execute(type);
+        mTarget.onRefreshStart();
+    }
 }
