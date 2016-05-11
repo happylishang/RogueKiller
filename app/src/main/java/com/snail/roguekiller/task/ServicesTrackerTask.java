@@ -34,7 +34,7 @@ public class ServicesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
         List<ActivityManager.RunningServiceInfo> _listRunServeces = manager.getRunningServices(Integer.MAX_VALUE);
         for (ActivityManager.RunningServiceInfo service : _listRunServeces) {
             RuningTaskInfo processInfo = new RuningTaskInfo();
-            processInfo.packageName = service.clientPackage;
+            processInfo.packageName = service.service.getPackageName();
             processInfo.processName = service.process;
             processInfo.applicationName = String.valueOf(service.process);
             ActivityManager.RunningAppProcessInfo info = new ActivityManager.RunningAppProcessInfo(service.process, service.pid, null);
