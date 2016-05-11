@@ -101,6 +101,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
 
     @Override
     public void OnPageRefresh() {
+        swpProcessList.setRefreshing(true);
         mPresenter.refresh();
     }
 }

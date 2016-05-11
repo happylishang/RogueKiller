@@ -45,14 +45,12 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
 
     private void startSearchTask() {
         new ProcessesTrackerTask().execute();
-        mTarget.showWaiting();
     }
 
     @Override
     public void onSKEventMainThread(BaseEvent event) {
         super.onSKEventMainThread(event);
         if (event.mEventType == EventConstants.GET_TASK) {
-            mTarget.stopWaiting();
             ProcessTrackEvent processTrackEvent = (ProcessTrackEvent) event;
             ProcessListInfo infos = (ProcessListInfo) processTrackEvent.mData;
             mProcessInfos.clear();
@@ -105,6 +103,6 @@ public class ProcessListPresenter extends BaseFragmentPresenter<ProcessListFragm
 
     @Override
     public void onRefresh() {
-        startSearchTask();
+        refresh();
     }
 }

@@ -35,11 +35,11 @@ abstract public class BaseActivity<T extends BaseActivityPresenter> extends AppC
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        setUpActionBar();
+//        setUpActionBar();
         ButterKnife.bind(this);
     }
 
-    private void setUpActionBar() {
+    public void setUpActionBar() {
         ActionBar _actionBar = getSupportActionBar();
         mCustomedActionbar = new CustomedActionbar();
         mCustomedActionbar.mActionBar = _actionBar;

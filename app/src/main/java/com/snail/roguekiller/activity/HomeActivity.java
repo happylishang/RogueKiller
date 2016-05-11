@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.framework.BaseActivity;
@@ -16,16 +17,15 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
+    private final static String KEY_CURRENT_POSITION = "current_position";
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
-
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +34,12 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         initView();
-        getSupportActionBar().hide();
         initListener();
         if (savedInstanceState != null) {
-            mViewPager.setCurrentItem(savedInstanceState.getInt("pos"));
+            mViewPager.setCurrentItem(savedInstanceState.getInt("KEY_CURRENT_POSITION"));
         }
     }
 
@@ -89,7 +90,6 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
-        outState.putInt("pos", mViewPager.getCurrentItem());
-
+        outState.putInt("KEY_CURRENT_POSITION", mViewPager.getCurrentItem());
     }
 }
