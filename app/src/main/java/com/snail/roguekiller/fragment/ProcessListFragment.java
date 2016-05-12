@@ -21,7 +21,7 @@ import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
-import jp.wasabeef.recyclerview.animators.FadeInAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 /**
  * Created by personal on 16/5/7.
@@ -54,7 +54,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mProcessList.setLayoutManager(layoutManager);
-        mProcessList.setItemAnimator(new FadeInAnimator());
+        mProcessList.setItemAnimator(new SlideInDownAnimator());
         mPresenter.initAdapter();
     }
 

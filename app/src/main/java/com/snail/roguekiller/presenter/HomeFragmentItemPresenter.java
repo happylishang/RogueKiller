@@ -71,13 +71,12 @@ public abstract class HomeFragmentItemPresenter<T extends HomeFragmentItem>
             mProcessInfos.clear();
             mAdapter.notifyDataSetChanged();
         } else {
-            Iterator<RuningTaskInfo> iterator = newList.iterator();
+            Iterator<RuningTaskInfo> iterator = mProcessInfos.iterator();
             while (iterator.hasNext()) {
                 RuningTaskInfo info = iterator.next();
                 if (!isInProcessList(info, newList)) {
                     int pos = mProcessInfos.indexOf(info);
                     iterator.remove();
-//                    mProcessInfos.remove(pos);
                     mAdapter.notifyItemRemoved(pos);
                 }
             }
