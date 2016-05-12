@@ -1,9 +1,11 @@
 package com.snail.roguekiller.application;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.crashlytics.android.Crashlytics;
 import com.snail.roguekiller.log.CrashHandler;
+import com.snail.roguekiller.service.BackGroundService;
 import com.snail.roguekiller.utils.AppProfile;
 import com.snail.roguekiller.utils.ServerUtils;
 
@@ -17,10 +19,12 @@ public class RogueKillerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        startService(new Intent(this, BackGroundService.class));
         init();
     }
 
     private void init() {
+
 
         if (ServerUtils.IS_DEBUG) {
             CrashHandler.getInstance().init(mContext);

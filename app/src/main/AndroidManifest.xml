@@ -47,6 +47,7 @@
             android:name="io.fabric.ApiKey"
             android:value="ea93667e4d9b2df70ad818c93818fe5cb20dd130"/>
 
+        <service android:name=".service.BackGroundService"/>
     </application>
 
 </manifest>

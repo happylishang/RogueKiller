@@ -50,7 +50,6 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         } else {
             fragment = mFragmentHashMap.get(position);
         }
-
         return fragment;
     }
 
