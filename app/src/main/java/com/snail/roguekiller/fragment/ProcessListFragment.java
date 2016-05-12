@@ -47,7 +47,6 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         return rootView;
     }
 
-
     private void initView() {
         initSwipViews();
         mProcessList = (RecyclerView) rootView.findViewById(R.id.recycler_view);

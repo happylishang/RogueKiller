@@ -3,7 +3,6 @@ package com.snail.roguekiller.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -42,8 +41,13 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         setSupportActionBar(toolbar);
         initView();
         initListener();
-        if (savedInstanceState != null) {
-            mViewPager.setCurrentItem(savedInstanceState.getInt("KEY_CURRENT_POSITION"));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState!=null){
+            mViewPager.setCurrentItem(savedInstanceState.getInt(KEY_CURRENT_POSITION));
         }
     }
 
@@ -92,9 +96,9 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putInt("KEY_CURRENT_POSITION", mViewPager.getCurrentItem());
+    public void onSaveInstanceState(Bundle outState ) {
+        super.onSaveInstanceState(outState );
+        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
     }
 
     private Menu mMenu;
@@ -106,6 +110,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         mMenu = menu;
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -127,7 +132,9 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
     }
 
     public void refreshToolbar(ToolbarStates states) {
-        MenuItem item = mMenu.findItem(R.id.menu_filter);
-        item.setChecked(states.processTyep == Constants.ProcessType.USER_ONLY);
+        if(mMenu!=null){
+            MenuItem item = mMenu.findItem(R.id.menu_filter);
+            item.setChecked(states.processTyep == Constants.ProcessType.USER_ONLY);
+        }
     }
 }

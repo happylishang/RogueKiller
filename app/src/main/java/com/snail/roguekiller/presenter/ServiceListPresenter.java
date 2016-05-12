@@ -92,7 +92,6 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
                     break;
             }
         }
-
     }
 
     public void refresh() {

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 
 import com.snail.roguekiller.fragment.IPageSelect;
@@ -18,10 +19,15 @@ abstract public class BaseFragment<T extends BaseFragmentPresenter> extends Frag
     private boolean mIsViewInflated;
     private ProgressDialog mWaitingDialog;
 
+    public BaseFragment(){
+        mPresenter = createPresenter();
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = createPresenter();
+        Log.v("lishang","f create");
+
+//        mPresenter = createPresenter();
         if (mPresenter != null) {
             mPresenter.onCreate();
         }

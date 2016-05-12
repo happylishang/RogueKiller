@@ -1,5 +1,6 @@
 package com.snail.roguekiller.adapter;
 
+import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -21,21 +22,11 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     static private Class[] mFragments = {
             ProcessListFragment.class,
             ServiceListFragment.class
-//            ,
-//            ProcessListFragment.class,
-//            ServiceListFragment.class,
-//            ProcessListFragment.class,
-//            ServiceListFragment.class
     };
 
     public String[] sTabTexts = new String[]{
             ResourcesUtil.getString(R.string.process_list),
             ResourcesUtil.getString(R.string.service_list)
-//            ,
-//            ResourcesUtil.getString(R.string.process_list),
-//            ResourcesUtil.getString(R.string.process_list),
-//            ResourcesUtil.getString(R.string.process_list),
-//            ResourcesUtil.getString(R.string.process_list)
     };
 
     public HomePagerAdapter(FragmentManager fm) {
@@ -73,4 +64,13 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         return sTabTexts[position];
     }
 
+    @Override
+    public void restoreState(Parcelable state, ClassLoader loader) {
+        super.restoreState(state, loader);
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return super.saveState();
+    }
 }

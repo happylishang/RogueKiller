@@ -35,10 +35,6 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
         return new ServiceListPresenter(this);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -122,7 +118,5 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
     public void showKillMessage(@NonNull String content) {
         Snackbar.make(mSwipeRefreshLayout, content, Snackbar.LENGTH_SHORT).show();
     }
-
-
 }
 
