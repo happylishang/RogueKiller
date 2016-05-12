@@ -53,6 +53,17 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         }
     }
 
+    private void killProcessImadiate(View view, final int position) {
+        mTarget.showKillMessage(mProcessInfos.get(position).applicationName + " has been killed !");
+        SystemUtils.killBackgroudApplication(mProcessInfos.get(position).packageName);
+        mProcessInfos.remove(position);
+        view.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter.notifyItemRemoved(position);
+            }
+        }, 200);
+    }
 
     @Override
     public void onItemClick(View view, int position) {
@@ -60,7 +71,8 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         mCurrentOperation = position;
         switch (view.getId()) {
             case R.id.lv_container:
-                mTarget.showConfirmDialog(position);
+                killProcessImadiate(view, position);
+//                mTarget.showConfirmDialog(position);
                 break;
         }
     }

@@ -25,6 +25,7 @@ public abstract class HomeFragmentItemPresenter<T extends HomeFragmentItem>
     }
 
     public int mProcessType = Constants.ProcessType.ALL;
+    private HomeFragmentItem.Action mAction = HomeFragmentItem.Action.CLIKC;
 
     public abstract void refresh();
 

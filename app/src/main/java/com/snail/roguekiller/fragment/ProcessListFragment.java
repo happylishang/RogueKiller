@@ -128,4 +128,5 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         mPresenter.OnPageFilter(type);
         mCurrentType = type;
     }
+
 }

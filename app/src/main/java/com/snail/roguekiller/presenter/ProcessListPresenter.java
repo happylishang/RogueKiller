@@ -9,7 +9,6 @@ import com.snail.roguekiller.datamodel.RuningTaskInfo;
 import com.snail.roguekiller.eventbus.BaseEvent;
 import com.snail.roguekiller.eventbus.EventConstants;
 import com.snail.roguekiller.eventbus.ProcessTrackEvent;
-import com.snail.roguekiller.fragment.HomeFragmentItem;
 import com.snail.roguekiller.fragment.ProcessListFragment;
 import com.snail.roguekiller.task.ProcessesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
@@ -28,8 +27,6 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
     private ProcessListAdapter mAdapter;
     private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
-    private HomeFragmentItem.Filter mFilter = HomeFragmentItem.Filter.USER_ONLY;
-    private HomeFragmentItem.Action mAction = HomeFragmentItem.Action.CLIKC;
 
     public ProcessListPresenter(ProcessListFragment target) {
         super(target);
@@ -68,14 +65,14 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
         }
     }
 
-    private void killProcessImadiate(View view, int position) {
+    private void killProcessImadiate(View view, final int position) {
         mTarget.showKillMessage(mProcessInfos.get(position).applicationName + " has been killed !");
         SystemUtils.killBackgroudApplication(mProcessInfos.get(position).packageName);
         mProcessInfos.remove(position);
         view.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemRemoved(position);
             }
         }, 200);
     }

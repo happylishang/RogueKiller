@@ -9,9 +9,6 @@ import android.content.pm.ResolveInfo;
 
 import java.util.List;
 
-/**
- * Created by personal on 16/5/8.
- */
 public class SystemUtils {
 
     public static List<ApplicationInfo> getInstalledApplications() {
