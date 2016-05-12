@@ -14,30 +14,17 @@ import com.snail.roguekiller.task.ProcessesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
 import com.snail.roguekiller.utils.SystemUtils;
 
-import java.util.ArrayList;
 
-/**
- * Created by personal on 16/5/7.
- */
 public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListFragment> implements
         ProcessListAdapter.OnItemClickListener,
         View.OnClickListener {
 
-
-    private ProcessListAdapter mAdapter;
-    private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
 
     public ProcessListPresenter(ProcessListFragment target) {
         super(target);
     }
 
-    public void initAdapter() {
-        mAdapter = new ProcessListAdapter(mProcessInfos);
-        mTarget.initAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-        refresh();
-    }
 
     @Override
     public void onSKEventMainThread(BaseEvent event) {
@@ -45,17 +32,16 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
         if (event.mEventType == EventConstants.GET_TASK) {
             ProcessTrackEvent processTrackEvent = (ProcessTrackEvent) event;
             ProcessListInfo infos = (ProcessListInfo) processTrackEvent.mData;
-            mProcessInfos.clear();
-            mProcessInfos.addAll(infos.mProcessInfos);
-            mAdapter.notifyDataSetChanged();
+            combin(infos.mProcessInfos);
             mTarget.onRefreshComplete();
         }
     }
 
-
     @Override
     public void onItemClick(View view, int position) {
 
+        if (position < 0)
+            return;
         mCurrentOperation = position;
         switch (view.getId()) {
             case R.id.lv_container:
@@ -74,7 +60,7 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
             public void run() {
                 mAdapter.notifyItemRemoved(position);
             }
-        }, 200);
+        }, 1);
     }
 
     @Override

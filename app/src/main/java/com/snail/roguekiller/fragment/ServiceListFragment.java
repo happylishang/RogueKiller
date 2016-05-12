@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
+import com.snail.roguekiller.adapter.ProcessListAdapter;
 import com.snail.roguekiller.presenter.ServiceListPresenter;
 import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 /**
  * Created by personal on 16/5/7.
@@ -63,6 +65,7 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mProcessList.setLayoutManager(layoutManager);
+        mProcessList.setItemAnimator(new FadeInAnimator());
         mPresenter.initAdapter();
 
     }
@@ -77,7 +80,7 @@ public class ServiceListFragment extends HomeFragmentItem<ServiceListPresenter> 
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
     }
 
-    public void initAdapter(RecyclerView.Adapter adapter) {
+    public void initAdapter(ProcessListAdapter adapter) {
         mProcessList.setAdapter(adapter);
     }
 

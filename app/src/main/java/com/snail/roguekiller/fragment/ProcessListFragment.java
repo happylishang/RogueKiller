@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
+import com.snail.roguekiller.adapter.ProcessListAdapter;
 import com.snail.roguekiller.datamodel.ToolbarStates;
 import com.snail.roguekiller.eventbus.ToolbarRefreshEvent;
 import com.snail.roguekiller.presenter.ProcessListPresenter;
@@ -20,6 +21,7 @@ import com.snail.roguekiller.utils.DialogUtils;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 /**
  * Created by personal on 16/5/7.
@@ -52,6 +54,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mProcessList.setLayoutManager(layoutManager);
+        mProcessList.setItemAnimator(new FadeInAnimator());
         mPresenter.initAdapter();
     }
 
@@ -67,7 +70,7 @@ public class ProcessListFragment extends HomeFragmentItem<ProcessListPresenter> 
         mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
     }
 
-    public void initAdapter(RecyclerView.Adapter adapter) {
+    public void initAdapter(ProcessListAdapter adapter) {
         mProcessList.setAdapter(adapter);
     }
 

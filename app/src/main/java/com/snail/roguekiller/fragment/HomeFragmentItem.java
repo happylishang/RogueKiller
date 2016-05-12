@@ -2,6 +2,7 @@ package com.snail.roguekiller.fragment;
 
 import android.support.annotation.NonNull;
 
+import com.snail.roguekiller.adapter.ProcessListAdapter;
 import com.snail.roguekiller.framework.BaseFragment;
 import com.snail.roguekiller.presenter.HomeFragmentItemPresenter;
 import com.snail.roguekiller.utils.Constants;
@@ -14,6 +15,8 @@ public abstract class HomeFragmentItem<T extends HomeFragmentItemPresenter>
         implements IPageRefresh,
         IPageFilter {
     public int mCurrentType = Constants.ProcessType.ALL;
+
+    public abstract void initAdapter(ProcessListAdapter adapter);
 
     public enum Filter {
         USER_ONLY,

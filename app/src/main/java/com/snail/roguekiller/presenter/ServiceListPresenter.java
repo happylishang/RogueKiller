@@ -14,8 +14,6 @@ import com.snail.roguekiller.task.ServicesTrackerTask;
 import com.snail.roguekiller.utils.DialogUtils;
 import com.snail.roguekiller.utils.SystemUtils;
 
-import java.util.ArrayList;
-
 /**
  * Created by personal on 16/5/7.
  */
@@ -24,21 +22,11 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         View.OnClickListener {
 
 
-    private ProcessListAdapter mAdapter;
-    private ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
     private int mCurrentOperation;
 
     public ServiceListPresenter(ServiceListFragment target) {
         super(target);
     }
-
-    public void initAdapter() {
-        mAdapter = new ProcessListAdapter(mProcessInfos);
-        mTarget.initAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(this);
-        refresh();
-    }
-
 
     @Override
     public void onSKEventMainThread(BaseEvent event) {
@@ -46,10 +34,31 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         if (event.mEventType == EventConstants.GET_SERVICE) {
             ServicesTrackEvent processTrackEvent = (ServicesTrackEvent) event;
             ProcessListInfo infos = (ProcessListInfo) processTrackEvent.mData;
-            mProcessInfos.clear();
-            mProcessInfos.addAll(infos.mProcessInfos);
-            mAdapter.notifyDataSetChanged();
+//            for (; mProcessInfos.size() > 0; ) {
+//                mProcessInfos.remove(0);
+//                mAdapter.notifyItemRemoved(0);
+//            }
+//            for (int i = 0; i < infos.mProcessInfos.size(); i++) {
+//                mProcessInfos.add(i, infos.mProcessInfos.get(i));
+//                mAdapter.notifyItemInserted(i);
+//            }
+            combin(infos.mProcessInfos);
             mTarget.onRefreshComplete();
+            mTarget.onRefreshComplete();
+        }
+    }
+
+
+    @Override
+    public void onItemClick(View view, int position) {
+        if (position < 0)
+            return;
+        mCurrentOperation = position;
+        switch (view.getId()) {
+            case R.id.lv_container:
+                killProcessImadiate(view, position);
+//                mTarget.showConfirmDialog(position);
+                break;
         }
     }
 
@@ -63,18 +72,6 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
                 mAdapter.notifyItemRemoved(position);
             }
         }, 200);
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-
-        mCurrentOperation = position;
-        switch (view.getId()) {
-            case R.id.lv_container:
-                killProcessImadiate(view, position);
-//                mTarget.showConfirmDialog(position);
-                break;
-        }
     }
 
     @Override
