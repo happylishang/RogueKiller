@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.adapter.ProcessListAdapter;
-import com.snail.roguekiller.datamodel.RuningTaskInfo;
+import com.snail.roguekiller.datamodel.RuningAppInfo;
 
 /**
  * Created by personal on 16/5/8.
@@ -37,9 +37,14 @@ public class ProcessListViewHolder extends RecyclerView.ViewHolder implements Vi
         rootView.setOnClickListener(this);
     }
 
-    public void renderViews(RuningTaskInfo info) {
+    public void renderViews(RuningAppInfo info) {
         mProcessName.setText(info.applicationName);
-        mPid.setText("pid: " + String.valueOf(info.pid));
+        StringBuilder builder = new StringBuilder();
+        builder.append("pid: ").append(String.valueOf(info.pid));
+        if (info.taskID > 0) {
+            builder.append("  TaskId: ").append(info.taskID);
+        }
+        mPid.setText(builder.toString());
         mIconImg.setImageDrawable(info.appIcon);
     }
 

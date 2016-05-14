@@ -4,7 +4,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.snail.roguekiller.adapter.ProcessListAdapter;
-import com.snail.roguekiller.datamodel.RuningTaskInfo;
+import com.snail.roguekiller.datamodel.RuningAppInfo;
 import com.snail.roguekiller.datamodel.ToolbarStates;
 import com.snail.roguekiller.eventbus.ToolbarRefreshEvent;
 import com.snail.roguekiller.fragment.HomeFragmentItem;
@@ -32,7 +32,7 @@ public abstract class HomeFragmentItemPresenter<T extends HomeFragmentItem>
     protected ProcessListAdapter mAdapter;
     public int mProcessType = Constants.ProcessType.ALL;
     private HomeFragmentItem.Action mAction = HomeFragmentItem.Action.CLIKC;
-    public ArrayList<RuningTaskInfo> mProcessInfos = new ArrayList<>();
+    public ArrayList<RuningAppInfo> mProcessInfos = new ArrayList<>();
 
     public abstract void refresh();
 
@@ -57,23 +57,23 @@ public abstract class HomeFragmentItemPresenter<T extends HomeFragmentItem>
         EventBus.getDefault().post(event);
     }
 
-    public boolean isInProcessList(RuningTaskInfo info, List<RuningTaskInfo> processListInfo) {
-        for (RuningTaskInfo item : processListInfo) {
+    public boolean isInProcessList(RuningAppInfo info, List<RuningAppInfo> processListInfo) {
+        for (RuningAppInfo item : processListInfo) {
             if (info.packageName.equals(item.packageName) && info.pid == item.pid)
                 return true;
         }
         return false;
     }
 
-    public void combin(List<RuningTaskInfo> newList) {
+    public void combin(List<RuningAppInfo> newList) {
 
         if (newList == null) {
             mProcessInfos.clear();
             mAdapter.notifyDataSetChanged();
         } else {
-            Iterator<RuningTaskInfo> iterator = mProcessInfos.iterator();
+            Iterator<RuningAppInfo> iterator = mProcessInfos.iterator();
             while (iterator.hasNext()) {
-                RuningTaskInfo info = iterator.next();
+                RuningAppInfo info = iterator.next();
                 if (!isInProcessList(info, newList)) {
                     int pos = mProcessInfos.indexOf(info);
                     iterator.remove();
@@ -82,7 +82,7 @@ public abstract class HomeFragmentItemPresenter<T extends HomeFragmentItem>
             }
             iterator = newList.iterator();
             while (iterator.hasNext()) {
-                RuningTaskInfo info = iterator.next();
+                RuningAppInfo info = iterator.next();
                 if (!isInProcessList(info, mProcessInfos)) {
                     int pos = newList.indexOf(info);
                     if (pos > mProcessInfos.size() - 1) {

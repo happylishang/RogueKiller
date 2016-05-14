@@ -20,7 +20,6 @@ import butterknife.OnClick;
 
 public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
-    private final static String KEY_CURRENT_POSITION = "current_position";
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
 
@@ -32,9 +31,6 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            savedInstanceState.putParcelable("android:support:fragments", null);
-        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,12 +40,10 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if(savedInstanceState!=null){
-            mViewPager.setCurrentItem(savedInstanceState.getInt(KEY_CURRENT_POSITION));
-        }
+    public void onResume() {
+        super.onResume();
     }
+
 
     @Override
     protected HomeActivityPresenter createPresenter() {
@@ -95,11 +89,6 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         mPresenter.refresh();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState ) {
-        super.onSaveInstanceState(outState );
-        outState.putInt(KEY_CURRENT_POSITION, mViewPager.getCurrentItem());
-    }
 
     private Menu mMenu;
 
@@ -132,7 +121,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
     }
 
     public void refreshToolbar(ToolbarStates states) {
-        if(mMenu!=null){
+        if (mMenu != null) {
             MenuItem item = mMenu.findItem(R.id.menu_filter);
             item.setChecked(states.processTyep == Constants.ProcessType.USER_ONLY);
         }

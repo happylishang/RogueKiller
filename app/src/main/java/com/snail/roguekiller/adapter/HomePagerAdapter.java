@@ -3,6 +3,7 @@ package com.snail.roguekiller.adapter;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.fragment.HomeFragmentItem;
@@ -51,6 +52,13 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             fragment = mFragmentHashMap.get(position);
         }
         return fragment;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        HomeFragmentItem fragmentItem = (HomeFragmentItem) super.instantiateItem(container, position);
+        mFragmentHashMap.put(position, fragmentItem);
+        return fragmentItem;
     }
 
     @Override
