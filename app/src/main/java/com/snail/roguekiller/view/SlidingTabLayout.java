@@ -163,7 +163,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         mViewPager = viewPager;
         if (viewPager != null) {
-            viewPager.setOnPageChangeListener(new InternalViewPagerListener());
+            viewPager.addOnPageChangeListener(new InternalViewPagerListener());
             populateTabStrip();
         }
     }
@@ -288,6 +288,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
             setselect(tabIndex);
         }
     }
+
+//  对于Text跟Imag的更新，交给外面 ？？selected unselected
 
     private class InternalViewPagerListener implements ViewPager.OnPageChangeListener {
         private int mScrollState;

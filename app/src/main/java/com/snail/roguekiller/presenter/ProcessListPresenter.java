@@ -30,7 +30,7 @@ public class ProcessListPresenter extends HomeFragmentItemPresenter<ProcessListF
     @Override
     public void onCreate() {
         super.onCreate();
-        mProcessType = PreferrenceHelper.gettCurrentFilter("ProcessList");
+//        mProcessType = PreferrenceHelper.gettCurrentFilter("ProcessList");
     }
 
     @Override
