@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.framework.BaseActivity;
@@ -29,6 +30,9 @@ public class AboutActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpActionBar();
+        getLftTv().setVisibility(View.GONE);
+        getRightTv().setVisibility(View.GONE);
+        getMiddleTv().setText("关于");
         setContentView(R.layout.activity_about);
     }
 
