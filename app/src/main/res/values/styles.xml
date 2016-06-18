@@ -8,7 +8,7 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:background">@mipmap/bg</item>
+        <item name="android:background">@mipmap/img_splash</item>
         <item name="windowNoTitle">true</item>
     </style>
 

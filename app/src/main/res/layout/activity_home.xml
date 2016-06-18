@@ -13,6 +13,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -39,11 +40,12 @@
             android:id="@+id/sld_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:background="@android:color/transparent"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
@@ -54,7 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
+        android:layout_margin="32dp"
+        android:translationZ="4dp"
         android:src="@android:drawable/ic_menu_rotate"/>
 
 </android.support.design.widget.CoordinatorLayout>
