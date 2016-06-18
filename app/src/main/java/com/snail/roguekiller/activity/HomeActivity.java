@@ -35,6 +35,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("R&K");
         initView();
         initListener();
     }

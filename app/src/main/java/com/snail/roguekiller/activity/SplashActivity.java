@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.snail.roguekiller.framework.BaseActivity;
 import com.snail.roguekiller.framework.BaseActivityPresenter;
@@ -18,7 +19,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        HideStatusBar();
         super.onCreate(savedInstanceState);
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -28,4 +29,13 @@ public class SplashActivity extends BaseActivity {
             }
         }, 100);
     }
+
+    private void HideStatusBar() {
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        Window myWindow = this.getWindow();
+        myWindow.setFlags(flag, flag);
+    }
+
 }
