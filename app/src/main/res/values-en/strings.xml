@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">RogueKiller</string>
+    <string name="process_list">Process</string>
+    <string name="service_list">Service</string>
+</resources>

@@ -27,7 +27,7 @@ public class SplashActivity extends BaseActivity {
                 HomeActivity.startActivity(SplashActivity.this);
                 finish();
             }
-        }, 100);
+        }, 800);
     }
 
     private void HideStatusBar() {
