@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="horizontal"
+              android:paddingBottom="24dp"
+              android:paddingLeft="28dp"
+              android:paddingRight="28dp"
+              android:paddingTop="32dp">
+
+    <TextView
+        android:id="@+id/btn_wechat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:drawableTop="@drawable/selector_share_wechat_btn"
+        android:gravity="center"
+        android:text="@string/we_chat_f"/>
+
+
+    <TextView
+        android:id="@+id/btn_wechat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:drawablePadding="8dp"
+        android:drawableTop="@drawable/selector_share_wechat_moments_btn"
+        android:gravity="center"
+        android:text="@string/we_chat_c"/>
+
+    <TextView
+        android:id="@+id/btn_qq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:drawablePadding="8dp"
+        android:drawableTop="@drawable/selector_share_qzone_btn"
+        android:gravity="center"
+        android:text="@string/qzon"/>
+
+</LinearLayout>

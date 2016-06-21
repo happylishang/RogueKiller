@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_setting"
-        android:title="设置"/>
+        android:title="@string/settting"/>
     <item
         android:id="@+id/menu_filter"
         android:checkable="true"
-        android:title="隐藏系统进程"/>
-
+        android:title="@string/hide_sys"/>
+    <item
+        android:id="@+id/menu_share"
+        android:title="@string/share"/>
 </menu>

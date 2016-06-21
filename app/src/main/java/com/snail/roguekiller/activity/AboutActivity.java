@@ -33,6 +33,8 @@ public class AboutActivity extends BaseActivity {
         getLftTv().setVisibility(View.GONE);
         getRightTv().setVisibility(View.GONE);
         getMiddleTv().setText("关于");
+        getMiddleTv().setTextSize(17);
+        getMiddleTv().setTextColor(0xffffffff);
         setContentView(R.layout.activity_about);
     }
 

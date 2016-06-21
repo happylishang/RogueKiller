@@ -2,4 +2,24 @@
     <string name="app_name">RogueKiller</string>
     <string name="process_list">进程列表</string>
     <string name="service_list">服务列表</string>
+
+
+    <string name="settting">设置</string>
+    <string name="hide_sys">隐藏系统进程</string>
+    <string name="share">分享</string>
+    <string name="slogen">程序员的助手，后台杀死模拟利器</string>
+
+
+    <string name="share_cancel">分享取消</string>
+    <string name="share_auth_denied">分享认证失败</string>
+    <string name="share_send_failure">请求发送失败</string>
+    <string name="share_params_error">参数有错误</string>
+    <string name="share_ok">感谢您的分享</string>
+
+    <string name="we_chat_f">微信好友</string>
+    <string name="we_chat_c">朋友圈</string>
+    <string name="qzon">QQ</string>
+
+    <string name="upgrade">检查更新</string>
+    <string name="version">版本信息</string>
 </resources>

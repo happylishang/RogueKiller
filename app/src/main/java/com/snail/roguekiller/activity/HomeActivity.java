@@ -13,6 +13,7 @@ import com.snail.roguekiller.R;
 import com.snail.roguekiller.datamodel.ToolbarStates;
 import com.snail.roguekiller.framework.BaseActivity;
 import com.snail.roguekiller.presenter.HomeActivityPresenter;
+import com.snail.roguekiller.share.ShareDialogFragment;
 import com.snail.roguekiller.utils.Constants;
 import com.snail.roguekiller.view.SlidingTabLayout;
 
@@ -22,6 +23,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
     private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
+    private ShareDialogFragment mShareDialogFragment;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, HomeActivity.class);
@@ -117,6 +119,10 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
                     mPresenter.OnPageFilter(Constants.ProcessType.ALL);
                 }
                 break;
+            case R.id.menu_share:
+                mShareDialogFragment = new ShareDialogFragment();
+                mShareDialogFragment.show(getSupportFragmentManager(), "");
+                break;
         }
         return true;
     }
@@ -126,5 +132,13 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
             MenuItem item = mMenu.findItem(R.id.menu_filter);
             item.setChecked(states.processTyep == Constants.ProcessType.USER_ONLY);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        if(mShareDialogFragment!=null && mShareDialogFragment.isDetached()){
+//            mShareDialogFragment.onActivityResult(requestCode, resultCode, data);
+//        }
     }
 }

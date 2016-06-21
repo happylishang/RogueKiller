@@ -2,17 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:padding="16dp">
 
     <Button
         android:id="@+id/btn_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Version"/>
+        android:layout_marginBottom="16dp"
+
+        android:background="@drawable/shape_rec_50_black"
+        android:text="@string/version"/>
 
     <Button
         android:id="@+id/btn_update"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upgrade"/>
+        android:background="@drawable/shape_rec_50_black"
+        android:text="@string/upgrade"/>
+
 </LinearLayout>
