@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.constant.Constants;
@@ -22,9 +23,16 @@ public class ShareDialogFragment extends DialogFragment implements View.OnClickL
     private View mShareToFriend;
     private QQShareUtil mQQShareUtil;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         return inflater.inflate(R.layout.fragment_share, container, false);
     }
 
