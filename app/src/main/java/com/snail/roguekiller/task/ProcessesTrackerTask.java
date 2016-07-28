@@ -42,7 +42,7 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
                     runingTaskInfo.processName = runningAppProcessInfo.processName;
                     runingTaskInfo.packageName = applicationInfo.packageName;
                     runingTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
-                    runingTaskInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
+                    runingTaskInfo.mApplicationInfo =applicationInfo;
                     processInfos.add(runingTaskInfo);
                 }
             }
@@ -59,7 +59,7 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
                     runingTaskInfo.processName = runningAppProcessInfo.processName;
                     runingTaskInfo.packageName = applicationInfo.packageName;
                     runingTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
-                    runingTaskInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
+                    runingTaskInfo.mApplicationInfo =applicationInfo;
                     processInfos.add(runingTaskInfo);
                 }
             }
@@ -71,6 +71,7 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
         processListInfo.mProcessInfos = processInfos;
         event.mData = processListInfo;
         EventBus.getDefault().post(event);
+
         return null;
     }
 

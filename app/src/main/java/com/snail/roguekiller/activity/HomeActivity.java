@@ -89,7 +89,14 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
 
     @OnClick(R.id.fab_refresh)
     void refresh() {
-        mPresenter.refresh();
+        try {
+            mPresenter.refresh();
+            throw new IllegalStateException(
+                    "Can not perform this action after onSaveInstanceState");
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
     }
 
 

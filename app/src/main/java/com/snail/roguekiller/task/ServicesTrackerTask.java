@@ -41,7 +41,7 @@ public class ServicesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
             ApplicationInfo applicationInfo = getApplciationInfo(info, type);
             if (applicationInfo != null) {
                 processInfo.pid = service.pid;
-                processInfo.appIcon = applicationInfo.loadIcon(AppProfile.getContext().getPackageManager());
+                processInfo.mApplicationInfo =applicationInfo;
                 processInfos.add(processInfo);
             }
         }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.adapter.ProcessListAdapter;
 import com.snail.roguekiller.datamodel.RuningAppInfo;
+import com.snail.roguekiller.threadpool.DrawableFecherUtils;
 
 /**
  * Created by personal on 16/5/8.
@@ -45,7 +46,7 @@ public class ProcessListViewHolder extends RecyclerView.ViewHolder implements Vi
             builder.append("  TaskId: ").append(info.taskID);
         }
         mPid.setText(builder.toString());
-        mIconImg.setImageDrawable(info.appIcon);
+        DrawableFecherUtils.loadDrawable(mIconImg,info.mApplicationInfo);
     }
 
     @Override

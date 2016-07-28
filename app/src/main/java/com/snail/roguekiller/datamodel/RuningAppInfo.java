@@ -1,5 +1,6 @@
 package com.snail.roguekiller.datamodel;
 
+import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -14,4 +15,5 @@ public class RuningAppInfo {
     public Drawable appIcon = null;
     public int uid;
     public int taskID;
+    public ApplicationInfo mApplicationInfo;
 }
