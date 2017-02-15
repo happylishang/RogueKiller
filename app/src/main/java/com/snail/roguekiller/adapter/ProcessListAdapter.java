@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.snail.roguekiller.R;
-import com.snail.roguekiller.datamodel.RuningAppInfo;
+import com.snail.roguekiller.datamodel.RunningAppInfo;
 import com.snail.roguekiller.viewholder.ProcessListViewHolder;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public class ProcessListAdapter extends RecyclerView.Adapter<ProcessListViewHold
     }
 
     private OnItemClickListener mOnItemClickListener;
-    private List<RuningAppInfo> mProcessInfos;
+    private List<RunningAppInfo> mProcessInfos;
 
-    public ProcessListAdapter(List<RuningAppInfo> infoList) {
+    public ProcessListAdapter(List<RunningAppInfo> infoList) {
         this.mProcessInfos = infoList;
     }
 

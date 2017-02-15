@@ -13,7 +13,6 @@ import android.text.TextUtils;
 import com.snail.roguekiller.application.RogueKillerApplication;
 
 /**
- * Created by zyl06 on 9/18/15.
  */
 public abstract class AppProfile {
     /* package */ static Context sContext = RogueKillerApplication.getApplicationContextInstance();

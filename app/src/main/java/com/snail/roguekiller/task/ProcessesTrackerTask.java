@@ -12,7 +12,7 @@ import android.os.Build;
 
 import com.jaredrummler.android.processes.AndroidProcesses;
 import com.snail.roguekiller.datamodel.ProcessListInfo;
-import com.snail.roguekiller.datamodel.RuningAppInfo;
+import com.snail.roguekiller.datamodel.RunningAppInfo;
 import com.snail.roguekiller.eventbus.ProcessTrackEvent;
 import com.snail.roguekiller.utils.AppProfile;
 import com.snail.roguekiller.utils.Constants;
@@ -29,21 +29,21 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
     @Override
     protected Integer doInBackground(Integer[] objects) {
         int type = objects.length > 0 ? objects[0].intValue() : Constants.ProcessType.ALL;
-        ArrayList<RuningAppInfo> processInfos = new ArrayList<>();
+        ArrayList<RunningAppInfo> processInfos = new ArrayList<>();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < 25 ) {
             List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = AndroidProcesses.getRunningAppProcessInfo(AppProfile.getContext());
             for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
                 ApplicationInfo applicationInfo = getApplciationInfo(runningAppProcessInfo, type);
                 if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-                    RuningAppInfo runingTaskInfo = new RuningAppInfo();
-                    runingTaskInfo.pid = runningAppProcessInfo.pid;
-                    runingTaskInfo.uid = runningAppProcessInfo.uid;
-                    runingTaskInfo.processName = runningAppProcessInfo.processName;
-                    runingTaskInfo.packageName = applicationInfo.packageName;
-                    runingTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
-                    runingTaskInfo.mApplicationInfo =applicationInfo;
-                    processInfos.add(runingTaskInfo);
+                    RunningAppInfo runningTaskInfo = new RunningAppInfo();
+                    runningTaskInfo.pid = runningAppProcessInfo.pid;
+                    runningTaskInfo.uid = runningAppProcessInfo.uid;
+                    runningTaskInfo.processName = runningAppProcessInfo.processName;
+                    runningTaskInfo.packageName = applicationInfo.packageName;
+                    runningTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
+                    runningTaskInfo.mApplicationInfo =applicationInfo;
+                    processInfos.add(runningTaskInfo);
                 }
             }
         } else {
@@ -53,14 +53,14 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
             for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcesses) {
                 ApplicationInfo applicationInfo = getApplciationInfo(runningAppProcessInfo, type);
                 if (applicationInfo != null && !SystemUtils.isSelfApplciation(applicationInfo)) {
-                    RuningAppInfo runingTaskInfo = new RuningAppInfo();
-                    runingTaskInfo.pid = runningAppProcessInfo.pid;
-                    runingTaskInfo.uid = runningAppProcessInfo.uid;
-                    runingTaskInfo.processName = runningAppProcessInfo.processName;
-                    runingTaskInfo.packageName = applicationInfo.packageName;
-                    runingTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
-                    runingTaskInfo.mApplicationInfo =applicationInfo;
-                    processInfos.add(runingTaskInfo);
+                    RunningAppInfo runningTaskInfo = new RunningAppInfo();
+                    runningTaskInfo.pid = runningAppProcessInfo.pid;
+                    runningTaskInfo.uid = runningAppProcessInfo.uid;
+                    runningTaskInfo.processName = runningAppProcessInfo.processName;
+                    runningTaskInfo.packageName = applicationInfo.packageName;
+                    runningTaskInfo.applicationName = String.valueOf(applicationInfo.loadLabel(AppProfile.getContext().getPackageManager()));
+                    runningTaskInfo.mApplicationInfo =applicationInfo;
+                    processInfos.add(runningTaskInfo);
                 }
             }
             addTaskId(runningTaskInfos,processInfos);
@@ -75,12 +75,12 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
         return null;
     }
 
-    public static ArrayList<RuningAppInfo> sortByFirstCase(ArrayList<RuningAppInfo> processInfos) {
+    public static ArrayList<RunningAppInfo> sortByFirstCase(ArrayList<RunningAppInfo> processInfos) {
 
-        ArrayList<RuningAppInfo> _tempInfos = new ArrayList<>();
+        ArrayList<RunningAppInfo> _tempInfos = new ArrayList<>();
         int cycle = processInfos.size();
         for (int i = 0; i < cycle; i++) {
-            RuningAppInfo _info = processInfos.get(processInfos.size() - 1);
+            RunningAppInfo _info = processInfos.get(processInfos.size() - 1);
             for (int j = processInfos.size() - 1; j > 0; j--) {
                 if (_info.applicationName.compareTo(processInfos.get(j - 1).applicationName) > 0) {
                     _info = processInfos.get(j - 1);
@@ -103,10 +103,10 @@ public class ProcessesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
     }
 
     public void addTaskId(List<ActivityManager.RunningTaskInfo> infos,
-                          List<RuningAppInfo> runningAppProcessInfos) {
+                          List<RunningAppInfo> runningAppProcessInfos) {
 
         for (ActivityManager.RunningTaskInfo info : infos) {
-            for (RuningAppInfo item : runningAppProcessInfos) {
+            for (RunningAppInfo item : runningAppProcessInfos) {
                 if (info.baseActivity.getPackageName().equals(item.packageName)) {
                     item.taskID = info.id;
                     break;

@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 /**
  * Created by personal on 16/5/8.
  */
-public class RuningAppInfo {
+public class RunningAppInfo {
 
     public int pid;
     public String processName;
@@ -15,5 +15,6 @@ public class RuningAppInfo {
     public Drawable appIcon = null;
     public int uid;
     public int taskID;
+    public int procState;
     public ApplicationInfo mApplicationInfo;
 }

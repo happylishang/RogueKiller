@@ -5,7 +5,7 @@ import android.view.View;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.adapter.ProcessListAdapter;
 import com.snail.roguekiller.datamodel.ProcessListInfo;
-import com.snail.roguekiller.datamodel.RuningAppInfo;
+import com.snail.roguekiller.datamodel.RunningAppInfo;
 import com.snail.roguekiller.eventbus.BaseEvent;
 import com.snail.roguekiller.eventbus.EventConstants;
 import com.snail.roguekiller.eventbus.ServicesTrackEvent;
@@ -81,7 +81,7 @@ public class ServiceListPresenter extends HomeFragmentItemPresenter<ServiceListF
         if (tag != null) {
             switch (tag) {
                 case DialogUtils.CONFIRM_ACTION.LETT_ACTION:
-                    RuningAppInfo info = mProcessInfos.get(mCurrentOperation);
+                    RunningAppInfo info = mProcessInfos.get(mCurrentOperation);
                     SystemUtils.killBackgroudApplication(info.applicationName);
                     mProcessInfos.remove(mCurrentOperation);
                     mAdapter.notifyDataSetChanged();

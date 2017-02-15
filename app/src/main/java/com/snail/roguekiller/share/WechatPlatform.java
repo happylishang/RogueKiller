@@ -11,7 +11,6 @@ import com.snail.roguekiller.constant.Constants;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 
 /**
- * Created by zyl06 on 12/21/15.
  */
 public class WechatPlatform {
     private IWXAPI api;

@@ -10,7 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
 
 import com.snail.roguekiller.datamodel.ProcessListInfo;
-import com.snail.roguekiller.datamodel.RuningAppInfo;
+import com.snail.roguekiller.datamodel.RunningAppInfo;
 import com.snail.roguekiller.eventbus.ServicesTrackEvent;
 import com.snail.roguekiller.utils.AppProfile;
 import com.snail.roguekiller.utils.Constants;
@@ -27,13 +27,13 @@ public class ServicesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
     @Override
     protected Integer doInBackground(Integer[] objects) {
         int type = objects.length > 0 ? objects[0].intValue() : Constants.ProcessType.ALL;
-        ArrayList<RuningAppInfo> processInfos = new ArrayList<>();
+        ArrayList<RunningAppInfo> processInfos = new ArrayList<>();
         ActivityManager manager = (ActivityManager) AppProfile.getContext().getSystemService(Context.ACTIVITY_SERVICE);
 
 
         List<ActivityManager.RunningServiceInfo> _listRunServeces = manager.getRunningServices(Integer.MAX_VALUE);
         for (ActivityManager.RunningServiceInfo service : _listRunServeces) {
-            RuningAppInfo processInfo = new RuningAppInfo();
+            RunningAppInfo processInfo = new RunningAppInfo();
             processInfo.packageName = service.service.getPackageName();
             processInfo.processName = service.process;
             processInfo.applicationName = String.valueOf(service.process);
@@ -54,12 +54,12 @@ public class ServicesTrackerTask extends AsyncTask<Integer, Integer, Integer> {
         return null;
     }
 
-    public static ArrayList<RuningAppInfo> sortByFirstCase(ArrayList<RuningAppInfo> processInfos) {
+    public static ArrayList<RunningAppInfo> sortByFirstCase(ArrayList<RunningAppInfo> processInfos) {
 
-        ArrayList<RuningAppInfo> _tempInfos = new ArrayList<>();
+        ArrayList<RunningAppInfo> _tempInfos = new ArrayList<>();
         int cycle = processInfos.size();
         for (int i = 0; i < cycle; i++) {
-            RuningAppInfo _info = processInfos.get(processInfos.size() - 1);
+            RunningAppInfo _info = processInfos.get(processInfos.size() - 1);
             for (int j = processInfos.size() - 1; j > 0; j--) {
                 if (_info.applicationName.compareTo(processInfos.get(j - 1).applicationName) > 0) {
                     _info = processInfos.get(j - 1);
