@@ -41,7 +41,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         toolbar.setTitle("R&K");
         initView();
         initListener();
-        NdkCrash.nativecrash();
+        new NdkCrash().nativecrash();
     }
 
     @Override

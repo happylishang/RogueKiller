@@ -13,6 +13,6 @@ public class NdkCrash {
     static {
         System.loadLibrary("JNISample");
     }
-    public static native void nativecrash();
+    public   native void nativecrash();
 
 }

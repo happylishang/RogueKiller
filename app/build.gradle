@@ -55,7 +55,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
+    sourceSets.main {
+        // 你的.so库的实际路径
+        jniLibs.srcDir 'src/libs'
+    }
 
 }
 
