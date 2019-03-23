@@ -11,7 +11,7 @@ public class NdkCrash2 {
      *
      */
     static {
-        System.loadLibrary("JNISample");
+        System.loadLibrary("JNISample2");
     }
     public   native void nativecrash();
 
