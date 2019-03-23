@@ -29,7 +29,12 @@ public class RogueKillerApplication extends Application {
         if (BuildConfig.DEBUG) {
             CrashHandler.getInstance().init(mContext);
         } else if (AppProfile.isMainProcess()) {
-            Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
+
+            final Fabric fabric = new Fabric.Builder(this)
+                    .kits(new Crashlytics(), new CrashlyticsNdk())
+                    .debuggable(true) // Enables Crashlytics debugger
+                    .build();
+            Fabric.with(fabric);
         }
     }
 

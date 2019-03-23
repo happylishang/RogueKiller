@@ -27,7 +27,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 2
-        versionName "1.1"
+        versionName "1.2"
         ndk {
             moduleName "JNISample"
         }
@@ -108,6 +108,12 @@ Properties loadProperties(String name) {
 
 crashlytics {
     enableNdk true
-    androidNdkOut 'src/main/obj'
-    androidNdkLibsOut 'src/main/libs'
+    androidNdkOut 'src/obj'
+    androidNdkLibsOut 'src/libs'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.startsWith('assemble')) {
+        task.finalizedBy "crashlyticsUploadSymbols" + task.name.substring('assemble'.length())
+    }
 }
