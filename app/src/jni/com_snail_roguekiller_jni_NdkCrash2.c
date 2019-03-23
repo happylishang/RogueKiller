@@ -43,7 +43,7 @@ void (*asmcheck)(void);
   check();
   }
 
-JNIEXPORT void JNICALL Java_com_snail_roguekiller_jni_NdkCrash_nativecrash
+JNIEXPORT void JNICALL Java_com_snail_roguekiller_jni_NdkCrash2_nativecrash
   (JNIEnv * env , jclass jj){
 
     int i=9;
