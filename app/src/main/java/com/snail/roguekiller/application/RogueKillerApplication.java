@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.snail.roguekiller.BuildConfig;
 import com.snail.roguekiller.log.CrashHandler;
 import com.snail.roguekiller.service.BackGroundService;
@@ -28,7 +29,7 @@ public class RogueKillerApplication extends Application {
         if (BuildConfig.DEBUG) {
             CrashHandler.getInstance().init(mContext);
         } else if (AppProfile.isMainProcess()) {
-            Fabric.with(this, new Crashlytics());
+            Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         }
     }
 
