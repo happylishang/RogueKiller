@@ -7,6 +7,12 @@ package com.snail.roguekiller.jni;
  * version:
  */
 public class NdkCrash {
+    /**
+     *
+     */
+    static {
+        System.loadLibrary("JNISample");
+    }
     public static native void nativecrash();
 
 }

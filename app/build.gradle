@@ -28,6 +28,10 @@ android {
         targetSdkVersion 23
         versionCode 2
         versionName "1.1"
+        ndk {
+            moduleName "JNISample"
+        }
+
     }
     signingConfigs {
         releaseConfig {
@@ -51,6 +55,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
 dependencies {

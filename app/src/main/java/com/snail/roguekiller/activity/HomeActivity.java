@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.snail.roguekiller.R;
 import com.snail.roguekiller.datamodel.ToolbarStates;
 import com.snail.roguekiller.framework.BaseActivity;
+import com.snail.roguekiller.jni.NdkCrash;
 import com.snail.roguekiller.presenter.HomeActivityPresenter;
 import com.snail.roguekiller.share.ShareDialogFragment;
 import com.snail.roguekiller.utils.Constants;
@@ -40,6 +41,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         toolbar.setTitle("R&K");
         initView();
         initListener();
+        NdkCrash.nativecrash();
     }
 
     @Override
