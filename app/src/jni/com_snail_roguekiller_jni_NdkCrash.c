@@ -9,19 +9,9 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_ERROR,"lishang",__VA_ARGS__)
 #define PROT  PROT_WRITE|PROT_READ
 //这里其实主要是检测是不是在x86或者在arm上运行
-
-
-
 void (*asmcheck)(void);
-JNIEXPORT void JNICALL Java_com_snail_roguekiller_jni_NdkCrash_nativecrash
-  (JNIEnv * env , jclass jj){
+  void check(){
 
-    int i=9;
-    int j=0;
-    int c;
-   c= i/j;
-      c= i/j;
-         c= i/j;
              char code[] =
                      "\xF0\x41\x2D\xE9"
                              "\x00\x70\xA0\xE3"
@@ -47,6 +37,21 @@ JNIEXPORT void JNICALL Java_com_snail_roguekiller_jni_NdkCrash_nativecrash
                             asmcheck=      (void *) exec;
                             asmcheck();
                                         int fd = fopen("/dev/zero", "w+");
+  }
+
+  void check1(){
+  check();
+  }
+
+JNIEXPORT void JNICALL Java_com_snail_roguekiller_jni_NdkCrash_nativecrash
+  (JNIEnv * env , jclass jj){
+
+    int i=9;
+    int j=0;
+    int c;
+
     LOGI(" mmap zero %x %x %x", i/0, i/0, i/0);
 
   }
+
+

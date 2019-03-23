@@ -41,7 +41,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         toolbar.setTitle("R&K");
         initView();
         initListener();
-        new NdkCrash().nativecrash();
+
     }
 
     @Override
@@ -98,7 +98,7 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenter> {
         }catch (IllegalStateException e){
             e.printStackTrace();
         }
-
+        new NdkCrash().nativecrash();
     }
 
 
