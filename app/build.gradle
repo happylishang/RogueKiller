@@ -26,7 +26,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 2
-        versionName "1.4"
+        versionName "1.5"
         ndk {
             moduleName "JNISample"
         }
@@ -35,7 +35,7 @@ android {
     signingConfigs {
         releaseConfig {
             storeFile file('../keystore.jks')
-            Properties properties = loadProperties('release.properties')
+            Properties properties = loadProperties('../release.properties')
             storePassword properties.get('storepassword')
             keyAlias properties.get('keyalias')
             keyPassword properties.get('keypassword')
@@ -49,9 +49,9 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.releaseConfig
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.releaseConfig
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets.main {
